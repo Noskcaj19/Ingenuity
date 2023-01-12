@@ -12,26 +12,18 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
-  private static WPI_TalonFX leftFront = new WPI_TalonFX(2);
-  private static WPI_TalonFX rightRear = new WPI_TalonFX(3);
-  private static WPI_TalonFX leftRear = new WPI_TalonFX(4);
-  private static WPI_TalonFX rightFront = new WPI_TalonFX(5);
-  
-  private static MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
-  private XboxController controller;
-  
-  public Drivetrain(XboxController controller) {
-    rightFront.setInverted(true);
-    rightRear.setInverted(true); 
-    this.controller = controller;
+  private final WPI_TalonFX leftFront = new WPI_TalonFX(2);
+  private final WPI_TalonFX rightRear = new WPI_TalonFX(3);
+  private final WPI_TalonFX leftRear = new WPI_TalonFX(4);
+  private final WPI_TalonFX rightFront = new WPI_TalonFX(5);
+
+  private final MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
+
+  public void driveMecanum(double x, double y, double rotation) {
+    drivetrain.driveCartesian(y, -x, -rotation);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  public void drive(double x, double y, double z){
+  public void drive(double x, double y, double z) {
     drivetrain.driveCartesian(-x, y, z);
   }
 }

@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
@@ -13,10 +12,8 @@ public class DefaultDrive extends CommandBase {
   private XboxController primaryController;
   private Drivetrain drivetrain;
   // pretend that there is a second controller
-  
-  /** Creates a new DefaultDrive. */
+
   public DefaultDrive(Drivetrain drivetrain, XboxController primaryController) {
-    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drivetrain);
     this.primaryController = primaryController;
     this.drivetrain = drivetrain;
@@ -24,18 +21,22 @@ public class DefaultDrive extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
 
-    
+    drivetrain.driveMecanum(-primaryController.getLeftY() * .5, primaryController.getLeftX() * .5,
+        primaryController.getRightX() * .5);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
