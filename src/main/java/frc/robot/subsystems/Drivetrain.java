@@ -23,11 +23,15 @@ public class Drivetrain extends SubsystemBase {
   public Drivetrain(XboxController controller) {
     rightFront.setInverted(true);
     rightRear.setInverted(true); 
-
+    this.controller = controller;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+  }
+
+  public void drive(double x, double y, double z){
+    drivetrain.driveCartesian(-x, y, z);
   }
 }
