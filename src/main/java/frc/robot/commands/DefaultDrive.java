@@ -28,9 +28,13 @@ public class DefaultDrive extends CommandBase {
   @Override
   public void execute() {
 
-    drivetrain.driveMecanum(-primaryController.getLeftY() * .5, primaryController.getLeftX() * .5,
-        primaryController.getRightX() * .5);
-
+    drivetrain.driveMecanum(primaryController.getLeftY() * .4, primaryController.getLeftX() * .4,
+        primaryController.getRightX() * .4);
+    if (primaryController.getStartButton()) {
+      drivetrain.zero();
+    }
+    // drivetrain.driveMecanum(primaryController.getRightY() * .3, primaryController.getLeftX() * .3,
+    // primaryController.getRightX() * .3);
   }
 
   // Called once the command ends or is interrupted.
