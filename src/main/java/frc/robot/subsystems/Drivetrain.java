@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -21,18 +22,20 @@ import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 
 public class Drivetrain extends SubsystemBase {
   /** Creates a new Drivetrain. */
+  // motor setup
   private final WPI_TalonFX leftFront = new WPI_TalonFX(3);
   private final WPI_TalonFX rightRear = new WPI_TalonFX(2);
   private final WPI_TalonFX leftRear = new WPI_TalonFX(5);
   private final WPI_TalonFX rightFront = new WPI_TalonFX(4);
   
-  Encoder encoder = new Encoder(0,1);
+  //Encoder encoder = new Encoder(0,1);
 
   Translation2d m_frontLeftLocation = new Translation2d(0.305, 0.257175);
   Translation2d m_frontRightLocation = new Translation2d(-0.305, 0.257175);
   Translation2d m_backLeftLocation = new Translation2d(0.305, -0.257175);
   Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
 
+  //Odometry stuffs
   public static final double kGearRatio = 10.71;
   public static final double kWheelRadius = 0.076;
   public static final double kEncoderResolution = 2048;
@@ -67,7 +70,18 @@ public Drivetrain(){
   rightRear.configNominalOutputReverse(0);
   leftFront.configNominalOutputReverse(0);
   leftRear.configNominalOutputReverse(0);
-  // odometry = new MechanumDriveOdomotry
+  
+  // set motors to default config vaulues
+  leftFront.configFactoryDefault();
+  leftRear.configFactoryDefault();
+  rightFront.configFactoryDefault();
+  rightRear.configFactoryDefault();
+
+  //set mode to brake on all motors
+  leftFront.setNeutralMode(NeutralMode.Brake);
+  leftRear.setNeutralMode(NeutralMode.Brake);
+  rightFront.setNeutralMode(NeutralMode.Brake);
+  rightRear.setNeutralMode(NeutralMode.Brake);
 }
   
   public void driveMecanum(double x, double y, double rotation) {
