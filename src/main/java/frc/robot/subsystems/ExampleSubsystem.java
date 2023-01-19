@@ -4,12 +4,43 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ExampleSubsystem extends SubsystemBase {
-  /** Creates a new ExampleSubsystem. */
-  public ExampleSubsystem() {}
+
+  // motors
+  private final CANSparkMax armExtend = new CANSparkMax(0, MotorType.kBrushed); // neo
+  private final Spark turretTurn = new Spark(2); // 217
+  private final Spark armLever = new Spark(1); // cim
+
+  public void makeArmOut() {
+    armExtend.set(0.5);
+  }
+
+  public void makeArmIn() {
+    armExtend.set(-0.5);
+  }
+
+  // public void makeArmUp(){
+  // armLever.set(0.3);
+  // }
+
+  // public void makeArmDown(){
+  // armLever.set(-0.3);
+  // }
+
+  public void makeArmUp(double yaxis) {
+    armLever.set(yaxis);
+  }
+
+  public void makeArmTurn(double xaxis) {
+    turretTurn.set(xaxis);
+  }
 
   /**
    * Example command factory method.
@@ -26,7 +57,8 @@ public class ExampleSubsystem extends SubsystemBase {
   }
 
   /**
-   * An example method querying a boolean state of the subsystem (for example, a digital sensor).
+   * An example method querying a boolean state of the subsystem (for example, a
+   * digital sensor).
    *
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
