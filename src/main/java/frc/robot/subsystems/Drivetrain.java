@@ -36,10 +36,10 @@ public class Drivetrain extends SubsystemBase {
   Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
 
   //Odometry stuffs
-  public static final double kGearRatio = 10.71;
-  public static final double kWheelRadius = 0.076;
-  public static final double kEncoderResolution = 2048;
-  public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
+  // public static final double kGearRatio = 10.71;
+  // public static final double kWheelRadius = 0.076;
+  // public static final double kEncoderResolution = 2048;
+  // public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
 
 
 
@@ -49,7 +49,7 @@ public class Drivetrain extends SubsystemBase {
   private  AHRS navx;
   private Rotation2d initAngle;
 
-  private final MecanumDriveOdometry odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(), new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()), new Pose2d(5.0, 13.5, new Rotation2d()));
+ // private final MecanumDriveOdometry odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(), new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()), new Pose2d(5.0, 13.5, new Rotation2d()));
 
 
 
@@ -93,33 +93,33 @@ public Drivetrain(){
     initAngle = navx.getRotation2d();
   }
 
-  public double getRRDistance() {
-    double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
-    return distance;
-  }
+  // public double getRRDistance() {
+  //   double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
+  //   return distance;
+  // }
 
-  public double getRLDistance() {
-    double distance = leftRear.getSelectedSensorPosition() * kDistancePerTick;
-    return distance;
-  }
+  // public double getRLDistance() {
+  //   double distance = leftRear.getSelectedSensorPosition() * kDistancePerTick;
+  //   return distance;
+  // }
 
-  public double getFRDistance() {
-    double distance = rightFront.getSelectedSensorPosition() * kDistancePerTick;
-    return distance;
-  }
+  // public double getFRDistance() {
+  //   double distance = rightFront.getSelectedSensorPosition() * kDistancePerTick;
+  //   return distance;
+  // }
 
-  public double getFLDistance() {
-    double distance = leftFront.getSelectedSensorPosition() * kDistancePerTick;
-    return distance;
-  }
+  // public double getFLDistance() {
+  //   double distance = leftFront.getSelectedSensorPosition() * kDistancePerTick;
+  //   return distance;
+  // }
 
   public void periodic(){
     
-    var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance());
+    // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance());
   
-    var gyroAngle = navx.getRotation2d();
+    // var gyroAngle = navx.getRotation2d();
 
-    var pose = odometry.update(gyroAngle, wheelPositions);
+   // var pose = odometry.update(gyroAngle, wheelPositions);
   }
 
   // public void drive(double x, double y, double z) {

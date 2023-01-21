@@ -14,17 +14,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class ExampleSubsystem extends SubsystemBase {
 
   // motors
-  private final CANSparkMax armExtend = new CANSparkMax(0, MotorType.kBrushed); // neo
-  private final Spark turretTurn = new Spark(2); // 217
-  private final Spark armLever = new Spark(1); // cim
+  // private final CANSparkMax armExtend = new CANSparkMax(0, MotorType.kBrushed); // neo
+  // private final Spark turretTurn = new Spark(2); // 217
+  // private final Spark armLever = new Spark(1); // cim
 
-  public void makeArmOut() {
-    armExtend.set(0.5);
-  }
+  // public void makeArmOut() {
+  //   armExtend.set(0.5);
+  // }
 
-  public void makeArmIn() {
-    armExtend.set(-0.5);
-  }
+  // public void makeArmIn() {
+  //   armExtend.set(-0.5);
+  // }
 
   // public void makeArmUp(){
   // armLever.set(0.3);
@@ -34,13 +34,13 @@ public class ExampleSubsystem extends SubsystemBase {
   // armLever.set(-0.3);
   // }
 
-  public void makeArmUp(double yaxis) {
-    armLever.set(yaxis);
-  }
+  // public void makeArmUp(double yaxis) {
+  //   armLever.set(yaxis);
+  // }
 
-  public void makeArmTurn(double xaxis) {
-    turretTurn.set(xaxis);
-  }
+  // public void makeArmTurn(double xaxis) {
+  //   turretTurn.set(xaxis);
+  // }
 
   /**
    * Example command factory method.
