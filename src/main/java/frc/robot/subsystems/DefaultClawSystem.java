@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DefaultClawSystem extends SubsystemBase {
 private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
-private CANSparkMax Arm = new CANSparkMax(9, MotorType.kBrushed);
+private CANSparkMax Arm = new CANSparkMax(9, MotorType.kBrushless);
 private CANSparkMax Extender = new CANSparkMax(11, MotorType.kBrushless);
 
 

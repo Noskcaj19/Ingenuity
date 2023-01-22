@@ -11,11 +11,13 @@ import frc.robot.subsystems.DefaultClawSystem;
 public class DefaultTurret extends CommandBase {
   /** Creates a new DefaultTurret. */
   private XboxController primaryController;
+  private XboxController secondaryController;
   private DefaultClawSystem defaultClawSystem;
-  public DefaultTurret(DefaultClawSystem defaultClawSystem, XboxController primaryController) {
+  public DefaultTurret(DefaultClawSystem defaultClawSystem, XboxController primaryController, XboxController secondaryController) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(defaultClawSystem);
     this.primaryController = primaryController;
+    this.secondaryController = secondaryController;
     this.defaultClawSystem = defaultClawSystem;
   }
 
@@ -55,6 +57,8 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.extendArm(0);
   }
 
+defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
+defaultClawSystem.moveArm(secondaryController.getLeftY()/7*-1);
 
   }
 

@@ -28,6 +28,8 @@ public class RobotContainer {
   
   //Controllers
   private final XboxController primaryController = new XboxController(0);
+  private final XboxController secondaryController = new XboxController(1);
+
 
   //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
@@ -36,7 +38,7 @@ public class RobotContainer {
 
   //commands
   private final DefaultDrive defaultDrive = new DefaultDrive(driveTrain, primaryController);
- private final DefaultTurret defaultTurret = new DefaultTurret(defaultClawSystem, primaryController);
+ private final DefaultTurret defaultTurret = new DefaultTurret(defaultClawSystem, primaryController, secondaryController);
   
 
      
