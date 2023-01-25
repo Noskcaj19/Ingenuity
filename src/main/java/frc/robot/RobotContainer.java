@@ -12,6 +12,7 @@ import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DefaultClawSystem;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -26,6 +27,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
   
+  private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
+
+
   //Controllers
   private final XboxController primaryController = new XboxController(0);
   private final XboxController secondaryController = new XboxController(1);
@@ -33,7 +37,7 @@ public class RobotContainer {
 
   //Subsystems
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final DefaultClawSystem defaultClawSystem = new DefaultClawSystem();
+  private final DefaultClawSystem defaultClawSystem = new DefaultClawSystem(pCM);
   private final Drivetrain driveTrain = new Drivetrain();  
 
   //commands

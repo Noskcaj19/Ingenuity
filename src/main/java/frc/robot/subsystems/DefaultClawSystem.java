@@ -7,16 +7,25 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsControlModule;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DefaultClawSystem extends SubsystemBase {
 private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
 private CANSparkMax Arm = new CANSparkMax(9, MotorType.kBrushless);
 private CANSparkMax Extender = new CANSparkMax(11, MotorType.kBrushless);
+private PneumaticsControlModule pCM;
+private final DoubleSolenoid armSolenoid;
 
 
   /** Creates a new DefaultClawSystem. */
-  public DefaultClawSystem() {}
+  public DefaultClawSystem(PneumaticsControlModule pCM) {
+    this.pCM = pCM;
+    armSolenoid = pCM.makeDoubleSolenoid(6, 7);
+    //armSolenoid.set(Value.kForward);
+  }
 
   @Override
   public void periodic() {
@@ -33,6 +42,14 @@ private CANSparkMax Extender = new CANSparkMax(11, MotorType.kBrushless);
 
   public void extendArm(double speed){
     Extender.set(speed);
+  }
+
+  public void openClaw(){
+    armSolenoid.set(Value.kForward);
+  }
+
+  public void closeClaw(){
+    armSolenoid.set(Value.kReverse);
   }
 
 }
