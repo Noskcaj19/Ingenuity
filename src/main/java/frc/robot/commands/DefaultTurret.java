@@ -50,9 +50,9 @@ public class DefaultTurret extends CommandBase {
 
   //code for extending arm
   if(primaryController.getAButton()){
-    defaultClawSystem.extendArm(0.2);
+    defaultClawSystem.extendArm(0.6);
   } else if(primaryController.getBButton()){
-    defaultClawSystem.extendArm(-0.2);
+    defaultClawSystem.extendArm(-0.6);
   } else{
     defaultClawSystem.extendArm(0);
   }
@@ -66,9 +66,9 @@ public class DefaultTurret extends CommandBase {
 
 
   if(secondaryController.getRightBumper()){ //extending arm on second controller
-    defaultClawSystem.extendArm(.2);
+    defaultClawSystem.extendArm(.6);
   } else if (secondaryController.getLeftBumper()){
-    defaultClawSystem.extendArm(-0.2);
+    defaultClawSystem.extendArm(-0.6);
   } else {
     defaultClawSystem.extendArm(0);
   }
