@@ -65,6 +65,14 @@ public class DefaultTurret extends CommandBase {
   }
 
 
+  if(secondaryController.getRightBumper()){ //extending arm on second controller
+    defaultClawSystem.extendArm(.2);
+  } else if (secondaryController.getLeftBumper()){
+    defaultClawSystem.extendArm(-0.2);
+  } else {
+    defaultClawSystem.extendArm(0);
+  }
+
 defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
 defaultClawSystem.moveArm(secondaryController.getLeftY()/7*-1);
 
