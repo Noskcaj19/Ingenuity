@@ -62,26 +62,14 @@ public Drivetrain(){
   rightRear.setInverted(true);
   rightFront.setInverted(true);
 
-  rightFront.configNominalOutputForward(0);
-  rightRear.configNominalOutputForward(0);
-  leftFront.configNominalOutputForward(0);
-  leftRear.configNominalOutputForward(0);
-  rightFront.configNominalOutputReverse(0);
-  rightRear.configNominalOutputReverse(0);
-  leftFront.configNominalOutputReverse(0);
-  leftRear.configNominalOutputReverse(0);
-  
-  // set motors to default config vaulues
-  leftFront.configFactoryDefault();
-  leftRear.configFactoryDefault();
-  rightFront.configFactoryDefault();
-  rightRear.configFactoryDefault();
-
-  //set mode to brake on all motors
-  leftFront.setNeutralMode(NeutralMode.Brake);
-  leftRear.setNeutralMode(NeutralMode.Brake);
-  rightFront.setNeutralMode(NeutralMode.Brake);
-  rightRear.setNeutralMode(NeutralMode.Brake);
+  // Setup for each wheel motor
+  WPI_TalonFX motors[] = {leftFront, leftRear, rightFront, rightRear};
+  for (WPI_TalonFX wheelMotor: motors) {
+    wheelMotor.configNominalOutputForward(0);
+    wheelMotor.configNominalOutputReverse(0);
+    wheelMotor.configFactoryDefault();
+    wheelMotor.setNeutralMode(NeutralMode.Brake);
+  }
 }
   
   public void driveMecanum(double x, double y, double rotation) {
