@@ -9,6 +9,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DefaultClawSystem;
 
 public class DefaultTurret extends CommandBase {
+  // Constant variables for speed
+  private final double TableSpinSpeed = .3;
+  private final double armMoveSpeed = .2;
+  private final double armExtendSpeed = .6;
   /** Creates a new DefaultTurret. */
   private XboxController primaryController;
   private XboxController secondaryController;
@@ -32,27 +36,27 @@ public class DefaultTurret extends CommandBase {
 
     //code for turntable
   if(primaryController.getRightBumper()){
-    defaultClawSystem.spinTable(0.3);
+    defaultClawSystem.spinTable(TableSpinSpeed);
   } else if(primaryController.getLeftBumper()){
-    defaultClawSystem.spinTable(-0.3);
+    defaultClawSystem.spinTable(-TableSpinSpeed);
   } else {
     defaultClawSystem.spinTable(0);
   }
 
   //code for moving arm
   if(primaryController.getYButton()){
-    defaultClawSystem.moveArm(0.2);
+    defaultClawSystem.moveArm(armMoveSpeed);
   } else if(primaryController.getXButton()){
-    defaultClawSystem.moveArm(-0.2);
+    defaultClawSystem.moveArm(-armMoveSpeed);
   } else{
     defaultClawSystem.moveArm(0);
   }
 
   //code for extending arm
   if(primaryController.getAButton()){
-    defaultClawSystem.extendArm(0.6);
+    defaultClawSystem.extendArm(armExtendSpeed);
   } else if(primaryController.getBButton()){
-    defaultClawSystem.extendArm(-0.6);
+    defaultClawSystem.extendArm(-armExtendSpeed);
   } else{
     defaultClawSystem.extendArm(0);
   }
@@ -66,9 +70,9 @@ public class DefaultTurret extends CommandBase {
 
 
   if(secondaryController.getRightBumper()){ //extending arm on second controller
-    defaultClawSystem.extendArm(.6);
+    defaultClawSystem.extendArm(armExtendSpeed);
   } else if (secondaryController.getLeftBumper()){
-    defaultClawSystem.extendArm(-0.6);
+    defaultClawSystem.extendArm(-armExtendSpeed);
   } else {
     defaultClawSystem.extendArm(0);
   }
