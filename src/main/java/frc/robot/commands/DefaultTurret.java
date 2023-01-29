@@ -78,7 +78,7 @@ public class DefaultTurret extends CommandBase {
   }
 
 defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
-defaultClawSystem.moveArm(secondaryController.getLeftY()/7*-1);
+defaultClawSystem.moveArm(secondaryController.getLeftX()*1/50);
 
   }
 

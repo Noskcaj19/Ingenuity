@@ -7,18 +7,22 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DefaultClawSystem extends SubsystemBase {
 private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
-private CANSparkMax Arm = new CANSparkMax(9, MotorType.kBrushless);
-private CANSparkMax Extender = new CANSparkMax(11, MotorType.kBrushless);
+private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushless);
+private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
 private PneumaticsControlModule pCM;
 private final DoubleSolenoid armSolenoid;
 
+private final PIDController armPID = new PIDController(1, 0, 0);
 
   /** Creates a new DefaultClawSystem. */
   public DefaultClawSystem(PneumaticsControlModule pCM) {
@@ -36,12 +40,12 @@ private final DoubleSolenoid armSolenoid;
     turnTable.set(speed);
   }
 
-  public void moveArm(double speed){
-    Arm.set(speed);
+  public void moveArm(double setpoint){
+    arm.set(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
   }
 
   public void extendArm(double speed){
-    Extender.set(speed);
+    extender.set(speed);
   }
 
   public void openClaw(){
