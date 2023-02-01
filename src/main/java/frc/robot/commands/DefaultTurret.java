@@ -44,14 +44,7 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.spinTable(0);
   }
 
-  //code for moving arm
-  if(primaryController.getYButton()){
-    defaultClawSystem.moveArm(armMoveSpeed);
-  } else if(primaryController.getXButton()){
-    defaultClawSystem.moveArm(-armMoveSpeed);
-  } else{
-    defaultClawSystem.moveArm(0);
-  }
+  
 
   //code for extending arm
   if(primaryController.getAButton()){
@@ -69,8 +62,8 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.closeClaw();
   }
 
-
-  if(secondaryController.getRightBumper()){ //extending arm on second controller
+//extending arm on second controller
+  if(secondaryController.getRightBumper()){ 
     defaultClawSystem.extendArm(armExtendSpeed);
   } else if (secondaryController.getLeftBumper()){
     defaultClawSystem.extendArm(-armExtendSpeed);
@@ -78,6 +71,7 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.extendArm(0);
   }
 
+  //sets setpoint for PID
   if(secondaryController.getXButton()){
     set = set + 0.1;
   } 
