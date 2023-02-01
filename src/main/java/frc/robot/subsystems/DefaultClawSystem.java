@@ -22,7 +22,7 @@ private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
 private PneumaticsControlModule pCM;
 private final DoubleSolenoid armSolenoid;
 
-private final PIDController armPID = new PIDController(1, 0, 0);
+private final PIDController armPID = new PIDController(0.5, 0, 0);
 
   /** Creates a new DefaultClawSystem. */
   public DefaultClawSystem(PneumaticsControlModule pCM) {

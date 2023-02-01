@@ -13,6 +13,7 @@ public class DefaultTurret extends CommandBase {
   private final double TableSpinSpeed = .3;
   private final double armMoveSpeed = .2;
   private final double armExtendSpeed = .6;
+  private double set = 0;
   /** Creates a new DefaultTurret. */
   private XboxController primaryController;
   private XboxController secondaryController;
@@ -77,8 +78,17 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.extendArm(0);
   }
 
+  if(secondaryController.getXButton()){
+    set = set + 0.1;
+  } 
+   if(secondaryController.getYButton()){
+    set = set - 0.1;
+  }
+
 defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
-defaultClawSystem.moveArm(secondaryController.getLeftX()*1/50);
+// defaultClawSystem.moveArm(secondaryController.getLeftX()*1/50);
+defaultClawSystem.moveArm(set);
+
 
   }
 
