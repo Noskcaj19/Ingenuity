@@ -22,7 +22,11 @@ private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
 private PneumaticsControlModule pCM;
 private final DoubleSolenoid armSolenoid;
 
-private final PIDController armPID = new PIDController(0.5, 0, 0);
+
+//p 0.5
+
+//good values for position controll p 0.4 i 0 d 0.002
+private final PIDController armPID = new PIDController(0.4, 0, 0.002);
 
   /** Creates a new DefaultClawSystem. */
   public DefaultClawSystem(PneumaticsControlModule pCM) {
@@ -42,6 +46,7 @@ private final PIDController armPID = new PIDController(0.5, 0, 0);
 
   public void moveArm(double setpoint){
     arm.set(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
+    //System.out.println(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
   }
 
   public void extendArm(double speed){

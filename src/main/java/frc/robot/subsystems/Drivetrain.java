@@ -73,7 +73,7 @@ public Drivetrain(){
 }
   
   public void driveMecanum(double x, double y, double rotation) {
-    System.out.println(navx.getRotation2d());
+   
     drivetrain.driveCartesian(-x, y, rotation, navx.getRotation2d().minus(initAngle));
   }
 
