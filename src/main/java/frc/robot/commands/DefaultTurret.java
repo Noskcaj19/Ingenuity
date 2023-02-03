@@ -71,18 +71,21 @@ public class DefaultTurret extends CommandBase {
     defaultClawSystem.extendArm(0);
   }
 
-  //sets setpoint for PID
-  if(secondaryController.getXButton()){
-    set = set + 0.1;
-  } 
-   if(secondaryController.getYButton()){
-    set = set - 0.1;
-  }
+  // //sets setpoint for PID
+  // if(secondaryController.getXButton()){
+  //   set = set + 0.1;
+  // } 
+  //  if(secondaryController.getYButton()){
+  //   set = set - 0.1;
+  // }
+//secondarycontroller > 0.1 thing
 
-defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
+  defaultClawSystem.spinTable(secondaryController.getLeftX()/4);
 // defaultClawSystem.moveArm(secondaryController.getLeftX()*1/50);
+//defaultClawSystem.moveArm(set);
+set = (-secondaryController.getLeftY() / 4) + set;
+System.out.println(-secondaryController.getLeftY());
 defaultClawSystem.moveArm(set);
-
 
   }
 
