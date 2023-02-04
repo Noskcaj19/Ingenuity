@@ -7,7 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.DefaultClawSystem;
+import frc.robot.subsystems.ClawSystem;
 
 public class DefaultTurret extends CommandBase {
   // Constant variables for speed
@@ -21,13 +21,13 @@ public class DefaultTurret extends CommandBase {
   /** Creates a new DefaultTurret. */
   private XboxController primaryController;
   private XboxController secondaryController;
-  private DefaultClawSystem defaultClawSystem;
-  public DefaultTurret(DefaultClawSystem defaultClawSystem, XboxController primaryController, XboxController secondaryController) {
+  private ClawSystem clawSystem;
+  public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(defaultClawSystem);
+    addRequirements(clawSystem);
     this.primaryController = primaryController;
     this.secondaryController = secondaryController;
-    this.defaultClawSystem = defaultClawSystem;
+    this.clawSystem = clawSystem;
   }
 
   // Called when the command is initially scheduled.
@@ -41,56 +41,56 @@ public class DefaultTurret extends CommandBase {
 
     //code for turntable
   if(primaryController.getRightBumper()){
-    defaultClawSystem.spinTable(TableSpinSpeed);
+    clawSystem.spinTable(TableSpinSpeed);
   } else if(primaryController.getLeftBumper()){
-    defaultClawSystem.spinTable(-TableSpinSpeed);
+    clawSystem.spinTable(-TableSpinSpeed);
   } else {
-    defaultClawSystem.spinTable(0);
+    clawSystem.spinTable(0);
   }
 
   
 
   //code for extending arm
   if(primaryController.getAButton()){
-    defaultClawSystem.extendArm(armExtendSpeed);
+    clawSystem.extendArm(armExtendSpeed);
   } else if(primaryController.getBButton()){
-    defaultClawSystem.extendArm(-armExtendSpeed);
+    clawSystem.extendArm(-armExtendSpeed);
   } else{
-    defaultClawSystem.extendArm(0);
+    clawSystem.extendArm(0);
   }
 
   if(secondaryController.getAButtonPressed()){
-    defaultClawSystem.openClaw();
+    clawSystem.openClaw();
   } 
    if(secondaryController.getBButtonPressed()){
-    defaultClawSystem.closeClaw();
+    clawSystem.closeClaw();
   }
 
   //code for turning the roller on and off :3
   if(secondaryController.getXButtonPressed()){
-    defaultClawSystem.rollerIn();
+    clawSystem.rollerIn();
   }
   if(secondaryController.getXButtonReleased()){
-    defaultClawSystem.rollerStop();
+    clawSystem.rollerStop();
   }
   if(secondaryController.getYButtonPressed()){
-    defaultClawSystem.rollerOut();
+    clawSystem.rollerOut();
   }
   if(secondaryController.getYButtonReleased()){
-    defaultClawSystem.rollerStop();
+    clawSystem.rollerStop();
   }
   
 
 //extending arm on second controller
   // if(secondaryController.getRightBumper()){ 
   //   extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
-  //   defaultClawSystem.extendArm(extendSet);
+  //   clawSystem.extendArm(extendSet);
   // } else if (secondaryController.getLeftBumper()){
   //   extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
-  //   defaultClawSystem.extendArm(extendSet);
+  //   clawSystem.extendArm(extendSet);
   // } 
   // System.out.println(extendSet);
-  // defaultClawSystem.extendArm(extendSet);
+  // clawSystem.extendArm(extendSet);
 
 
   // our own very special deadband method!!!
@@ -108,9 +108,9 @@ public class DefaultTurret extends CommandBase {
 
 
   extendSet = MathUtil.clamp(-extendController + extendSet, 0, 45);
-  defaultClawSystem.extendArm(extendSet);
+  clawSystem.extendArm(extendSet);
   // else {
-  //   defaultClawSystem.extendArm(extendSet);
+  //   clawSystem.extendArm(extendSet);
   // }
 
   // //sets setpoint for PID
@@ -122,11 +122,11 @@ public class DefaultTurret extends CommandBase {
   // }
 //secondarycontroller > 0.1 thing
 
-  defaultClawSystem.spinTable(secondaryController.getLeftX()/8);
-// defaultClawSystem.moveArm(secondaryController.getLeftX()*1/50);
-//defaultClawSystem.moveArm(set);
+  clawSystem.spinTable(secondaryController.getLeftX()/8);
+// clawSystem.moveArm(secondaryController.getLeftX()*1/50);
+//clawSystem.moveArm(set);
 set = (-moveController / 4) + set;
-defaultClawSystem.moveArm(set);
+clawSystem.moveArm(set);
 
   }
 

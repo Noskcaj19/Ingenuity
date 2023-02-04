@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class DefaultClawSystem extends SubsystemBase {
+public class ClawSystem extends SubsystemBase {
 private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
 private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushless);
 private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
@@ -30,8 +30,10 @@ private final DoubleSolenoid armSolenoid;
 private final PIDController armPID = new PIDController(0.4, 0, 0.002);
 private final PIDController extendPID = new PIDController(0.3, 0, 0);
 
-  /** Creates a new DefaultClawSystem. */
-  public DefaultClawSystem(PneumaticsControlModule pCM) {
+  /** Creates a new 
+ClawSystem. */
+  public 
+ClawSystem(PneumaticsControlModule pCM) {
     this.pCM = pCM;
     armSolenoid = pCM.makeDoubleSolenoid(6, 7);
     //armSolenoid.set(Value.kForward);

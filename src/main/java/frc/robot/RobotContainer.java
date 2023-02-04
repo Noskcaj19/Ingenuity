@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultTurret;
-import frc.robot.subsystems.DefaultClawSystem;
+import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.XboxController;
@@ -33,12 +33,13 @@ public class RobotContainer {
 
 
   //Subsystems
-  private final DefaultClawSystem defaultClawSystem = new DefaultClawSystem(pCM);
-  private final Drivetrain driveTrain = new Drivetrain();  
+  private final ClawSystem clawSystem = new ClawSystem(pCM);
+  private final Drivetrain drivetrain = new Drivetrain(); 
 
   //commands
-  private final DefaultDrive defaultDrive = new DefaultDrive(driveTrain, primaryController);
- private final DefaultTurret defaultTurret = new DefaultTurret(defaultClawSystem, primaryController, secondaryController);
+  private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
+  private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
+  private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
   
 
      
@@ -46,8 +47,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    driveTrain.setDefaultCommand(defaultDrive);
-    defaultClawSystem.setDefaultCommand(defaultTurret);
+    drivetrain.setDefaultCommand(defaultDrive);
+    clawSystem.setDefaultCommand(defaultTurret);
 
   }
 
