@@ -1,4 +1,4 @@
-package frc.robot.command;
+package frc.robot.commands;
 
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.ClawSystem;

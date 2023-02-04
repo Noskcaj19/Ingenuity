@@ -7,6 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultTurret;
+import frc.robot.commands.DefaultAuto;
 import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
