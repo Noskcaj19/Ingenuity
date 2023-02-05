@@ -5,30 +5,30 @@
 // import frc.robot.subsystems.Drivetrain;
 
 // public class Drive extends CommandBase {
-  
-//   public Drive() {
-//     private Drivetrain drivetrain;
-//     public Command schedule;
-//     double distance = 0
-//   }
 
-//   @Override
-//   public void initialize() {
-//     drivetrain.zeroSensors();
-//   }
+//     public Drive() {
+//         private Drivetrain drivetrain;
+//         public Command schedule;
+//         double distance = 0;
+//     }
 
-//    public double setDistance(double distance){
-//     return distance;
-//    }
+//     @Override
+//     public void initialize() {
+//         drivetrain.zeroSensors();
+//     }
 
-//   @Override
-//   public void execute() {}
+//     public double setDistance(double distance){
+//         return distance;
+//     }
 
-//   @Override
-//   public void end(boolean interrupted) {}
+//     @Override
+//     public void execute() {}
 
-//   @Override
-//   public boolean isFinished() {
-//     return false;
-//   }
+//     @Override
+//     public void end(boolean interrupted) {}
+
+//     @Override
+//     public boolean isFinished() {
+//         return false;
+//     }
 // }

@@ -16,65 +16,61 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSystem extends SubsystemBase {
-private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
-private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushless);
-private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
-private CANSparkMax roller = new CANSparkMax(30, MotorType.kBrushed);
-private PneumaticsControlModule pCM;
-private final DoubleSolenoid armSolenoid;
+	private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
+	private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushless);
+	private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
+	private CANSparkMax roller = new CANSparkMax(30, MotorType.kBrushed);
+	private PneumaticsControlModule pCM;
+	private final DoubleSolenoid armSolenoid;
 
+	//p 0.5
+	//good values for position controll p 0.4 i 0 d 0.002
+	private final PIDController armPID = new PIDController(0.4, 0, 0.002);
+	private final PIDController extendPID = new PIDController(0.3, 0, 0);
 
-//p 0.5
+	/** Creates a new ClawSystem. */
+	public ClawSystem(PneumaticsControlModule pCM) {
+		this.pCM = pCM;
+		armSolenoid = pCM.makeDoubleSolenoid(6, 7);
+		//armSolenoid.set(Value.kForward);
+	}
 
-//good values for position controll p 0.4 i 0 d 0.002
-private final PIDController armPID = new PIDController(0.4, 0, 0.002);
-private final PIDController extendPID = new PIDController(0.3, 0, 0);
+	@Override
+	public void periodic() {
+		// This method will be called once per scheduler run
+	}
 
-  /** Creates a new 
-ClawSystem. */
-  public 
-ClawSystem(PneumaticsControlModule pCM) {
-    this.pCM = pCM;
-    armSolenoid = pCM.makeDoubleSolenoid(6, 7);
-    //armSolenoid.set(Value.kForward);
-  }
+	public void spinTable(double speed){
+		turnTable.set(speed);
+	}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
+	public void moveArm(double setpoint){
+		arm.set(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
+		//System.out.println(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
+	}
 
-  public void spinTable(double speed){
-    turnTable.set(speed);
-  }
+	public void extendArm(double extendSetpoint){
+		extender.set(MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition(), extendSetpoint), -0.7, 0.7));
+	}
 
-  public void moveArm(double setpoint){
-    arm.set(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
-    //System.out.println(MathUtil.clamp(armPID.calculate(arm.getEncoder().getPosition(), setpoint), -0.5, 0.5));
-  }
+	public void openClaw(){
+		armSolenoid.set(Value.kForward);
+	}
 
-  public void extendArm(double extendSetpoint){
-    extender.set(MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition(), extendSetpoint), -0.7, 0.7));
-  }
+	public void closeClaw(){
+		armSolenoid.set(Value.kReverse);
+	}
 
-  public void openClaw(){
-    armSolenoid.set(Value.kForward);
-  }
+	public void rollerIn(){
+		roller.set(0.5);
+	}
 
-  public void closeClaw(){
-    armSolenoid.set(Value.kReverse);
-  }
+	public void rollerOut(){
+		roller.set(-0.5);
+	}
 
-  public void rollerIn(){
-    roller.set(0.5);
-  }
-
-  public void rollerOut(){
-    roller.set(-0.5);
-  }
-
-  public void rollerStop(){
-    roller.set(0);
-  }
+	public void rollerStop(){
+		roller.set(0);
+	}
 
 }

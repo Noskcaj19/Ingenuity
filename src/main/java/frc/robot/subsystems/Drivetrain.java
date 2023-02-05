@@ -21,96 +21,90 @@ import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
 import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
 
 public class Drivetrain extends SubsystemBase {
-  /** Creates a new Drivetrain. */
-  // motor setup
-  private final WPI_TalonFX leftFront = new WPI_TalonFX(3);
-  private final WPI_TalonFX rightRear = new WPI_TalonFX(2);
-  private final WPI_TalonFX leftRear = new WPI_TalonFX(5);
-  private final WPI_TalonFX rightFront = new WPI_TalonFX(4);
-  
-  //Encoder encoder = new Encoder(0,1);
+    /** Creates a new Drivetrain. */
+    // motor setup
+    private final WPI_TalonFX leftFront = new WPI_TalonFX(3);
+    private final WPI_TalonFX rightRear = new WPI_TalonFX(2);
+    private final WPI_TalonFX leftRear = new WPI_TalonFX(5);
+    private final WPI_TalonFX rightFront = new WPI_TalonFX(4);
 
-  Translation2d m_frontLeftLocation = new Translation2d(0.305, 0.257175);
-  Translation2d m_frontRightLocation = new Translation2d(-0.305, 0.257175);
-  Translation2d m_backLeftLocation = new Translation2d(0.305, -0.257175);
-  Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
+    //Encoder encoder = new Encoder(0,1);
 
-  //Odometry stuffs
-  // public static final double kGearRatio = 10.71;
-  // public static final double kWheelRadius = 0.076;
-  // public static final double kEncoderResolution = 2048;
-  // public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
+    Translation2d m_frontLeftLocation = new Translation2d(0.305, 0.257175);
+    Translation2d m_frontRightLocation = new Translation2d(-0.305, 0.257175);
+    Translation2d m_backLeftLocation = new Translation2d(0.305, -0.257175);
+    Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
 
+    //Odometry stuffs
+    // public static final double kGearRatio = 10.71;
+    // public static final double kWheelRadius = 0.076;
+    // public static final double kEncoderResolution = 2048;
+    // public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
 
+    private final MecanumDriveKinematics kinematics = new MecanumDriveKinematics(m_backLeftLocation, m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
+    private final MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
+    private  AHRS navx;
+    private Rotation2d initAngle;
+    // private final MecanumDriveOdometry odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(), new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()), new Pose2d(5.0, 13.5, new Rotation2d()));
 
-  private final MecanumDriveKinematics kinematics = new MecanumDriveKinematics(m_backLeftLocation, m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
+    public Drivetrain(){
+        try {
+            navx = new AHRS(Port.kMXP);
+            // navx.setAngleAdjustment(navx.getRotation2d().getDegrees());
+            initAngle = navx.getRotation2d();
+        } catch (Exception ex) {}
 
-  private final MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
-  private  AHRS navx;
-  private Rotation2d initAngle;
+        rightRear.setInverted(true);
+        rightFront.setInverted(true);
 
- // private final MecanumDriveOdometry odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(), new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()), new Pose2d(5.0, 13.5, new Rotation2d()));
+        // Setup for each wheel motor
+        WPI_TalonFX motors[] = {leftFront, leftRear, rightFront, rightRear};
+        for (WPI_TalonFX wheelMotor: motors) {
+            wheelMotor.configNominalOutputForward(0);
+            wheelMotor.configNominalOutputReverse(0);
+            wheelMotor.configFactoryDefault();
+            wheelMotor.setNeutralMode(NeutralMode.Brake);
+        }
+    }
 
+    public void driveMecanum(double x, double y, double rotation) {
+        drivetrain.driveCartesian(-x, y, rotation, navx.getRotation2d().minus(initAngle));
+    }
 
+    public void zero() {
+        initAngle = navx.getRotation2d();
+    }
 
-public Drivetrain(){
-  try {
-    navx = new AHRS(Port.kMXP);
-    // navx.setAngleAdjustment(navx.getRotation2d().getDegrees());
-    initAngle = navx.getRotation2d();
-  } catch (Exception ex) {}
-  rightRear.setInverted(true);
-  rightFront.setInverted(true);
+    // public double getRRDistance() {
+    //     double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
+    //     return distance;
+    // }
 
-  // Setup for each wheel motor
-  WPI_TalonFX motors[] = {leftFront, leftRear, rightFront, rightRear};
-  for (WPI_TalonFX wheelMotor: motors) {
-    wheelMotor.configNominalOutputForward(0);
-    wheelMotor.configNominalOutputReverse(0);
-    wheelMotor.configFactoryDefault();
-    wheelMotor.setNeutralMode(NeutralMode.Brake);
-  }
-}
-  
-  public void driveMecanum(double x, double y, double rotation) {
-   
-    drivetrain.driveCartesian(-x, y, rotation, navx.getRotation2d().minus(initAngle));
-  }
+    // public double getRLDistance() {
+    //     double distance = leftRear.getSelectedSensorPosition() * kDistancePerTick;
+    //     return distance;
+    // }
 
-  public void zero() {
-    initAngle = navx.getRotation2d();
-  }
+    // public double getFRDistance() {
+    //     double distance = rightFront.getSelectedSensorPosition() * kDistancePerTick;
+    //     return distance;
+    // }
 
-  // public double getRRDistance() {
-  //   double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
-  //   return distance;
-  // }
+    // public double getFLDistance() {
+    //     double distance = leftFront.getSelectedSensorPosition() * kDistancePerTick;
+    //     return distance;
+    // }
 
-  // public double getRLDistance() {
-  //   double distance = leftRear.getSelectedSensorPosition() * kDistancePerTick;
-  //   return distance;
-  // }
+    public void periodic(){
 
-  // public double getFRDistance() {
-  //   double distance = rightFront.getSelectedSensorPosition() * kDistancePerTick;
-  //   return distance;
-  // }
+        // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance());
 
-  // public double getFLDistance() {
-  //   double distance = leftFront.getSelectedSensorPosition() * kDistancePerTick;
-  //   return distance;
-  // }
+        // var gyroAngle = navx.getRotation2d();
 
-  public void periodic(){
-    
-    // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance());
-  
-    // var gyroAngle = navx.getRotation2d();
+        // var pose = odometry.update(gyroAngle, wheelPositions);
+    }
 
-   // var pose = odometry.update(gyroAngle, wheelPositions);
-  }
-
-  // public void drive(double x, double y, double z) {
-  //   drivetrain.driveCartesian(-x, y, z);
-  // }
+    // public void drive(double x, double y, double z) {
+    //     drivetrain.driveCartesian(-x, y, z);
+    // }
 }

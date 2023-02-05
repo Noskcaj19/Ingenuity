@@ -5,8 +5,9 @@
 Code for our as of unnamed robtot for the 2023 FRC season
 
 ---
-
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <!-- This part should be edited each time we apply new controls for our robot -->
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 
 ### Controls for the robot
 
@@ -14,12 +15,12 @@ Code for our as of unnamed robtot for the 2023 FRC season
 | Primary controller   |                    |
 | -------------------- | ------------------ |
 | Right & Left Bumpers | Spinning the table |
-| Y & X Buttons        | Moving the arm     |
 | A & B Buttons        | Extending the arm  |
 
-| Secondary controller            |                              |
-| ------------------------------- | ---------------------------- |
-| A & B Buttons                   | Opening and closing the claw |
-| Right & Left Bumpers            | Extending the arm            |
-| X Position of the left joystick | Spinning the table           |
-| Y Position of the left joystick | Moving the arm               |
+| Secondary controller             |                               |
+| -------------------------------- | ----------------------------- |
+| A & B Buttons                    | Opening and closing the claw  |
+| X & Y Buttons                    | Turning the roller on and off |
+| Y Position of the right joystick | Extending the arm             |
+| Y Position of the left joystick  | Moving the arm                |
+| X Position of the left joystick  | Spinning the table            |

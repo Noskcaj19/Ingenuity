@@ -24,62 +24,58 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 
 public class RobotContainer {
-  
-  private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
+
+    private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
+
+    //Controllers
+    private final XboxController primaryController = new XboxController(0);
+    private final XboxController secondaryController = new XboxController(1);
+
+    //Subsystems
+    private final ClawSystem clawSystem = new ClawSystem(pCM);
+    private final Drivetrain drivetrain = new Drivetrain(); 
+
+    //commands
+    private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
+    private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
+    private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
 
 
-  //Controllers
-  private final XboxController primaryController = new XboxController(0);
-  private final XboxController secondaryController = new XboxController(1);
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    public RobotContainer() {
+        // Configure the trigger bindings
+        configureBindings();
+        drivetrain.setDefaultCommand(defaultDrive);
+        clawSystem.setDefaultCommand(defaultTurret);
+    }
 
+    /**
+     * Use this method to define your trigger->command mappings. Triggers can be created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+     * predicate, or via the named factories in {@link
+     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
+     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * joysticks}.
+     */
+    private void configureBindings() {
+        // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
+        // new Trigger(m_exampleSubsystem::exampleCondition)
+        //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-  //Subsystems
-  private final ClawSystem clawSystem = new ClawSystem(pCM);
-  private final Drivetrain drivetrain = new Drivetrain(); 
+        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+        // cancelling on release.
+        //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+    }
 
-  //commands
-  private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
-  private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
-  private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
-  
-
-     
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
-    drivetrain.setDefaultCommand(defaultDrive);
-    clawSystem.setDefaultCommand(defaultTurret);
-
-  }
-
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    // new Trigger(m_exampleSubsystem::exampleCondition)
-    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    //write auto code once we get full robot
-    return null;
-  }
+    /**
+     * Use this to pass the autonomous command to the main {@link Robot} class.
+     *
+     * @return the command to run in autonomous
+     */
+    public Command getAutonomousCommand() {
+        // An example command will be run in autonomous
+        //write auto code once we get full robot
+        return null;
+    }
 }

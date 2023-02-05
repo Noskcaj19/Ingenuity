@@ -10,133 +10,131 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSystem;
 
 public class DefaultTurret extends CommandBase {
-  // Constant variables for speed
-  private final double TableSpinSpeed = .3;
-  private final double armMoveSpeed = .2;
-  private double extendSet = 0;
-  private final double armExtendSpeed = .6;
-  private double set = 0;
-  private double extendController = 0;
-  private double moveController = 0;
-  /** Creates a new DefaultTurret. */
-  private XboxController primaryController;
-  private XboxController secondaryController;
-  private ClawSystem clawSystem;
-  public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(clawSystem);
-    this.primaryController = primaryController;
-    this.secondaryController = secondaryController;
-    this.clawSystem = clawSystem;
-  }
+    // Constant variables for speed
+    private final double armExtendSpeed = .6;
+    private final double TableSpinSpeed = .3;
+    private final double armMoveSpeed = .2;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {}
+    private double extendController = 0;
+    private double moveController = 0;
+    private double extendSet = 0;
+    private double set = 0;
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
+    private XboxController primaryController;
+    private XboxController secondaryController;
+    private ClawSystem clawSystem;
 
-
-    //code for turntable
-  if(primaryController.getRightBumper()){
-    clawSystem.spinTable(TableSpinSpeed);
-  } else if(primaryController.getLeftBumper()){
-    clawSystem.spinTable(-TableSpinSpeed);
-  } else {
-    clawSystem.spinTable(0);
-  }
-
-  
-
-  //code for extending arm
-  if(primaryController.getAButton()){
-    clawSystem.extendArm(armExtendSpeed);
-  } else if(primaryController.getBButton()){
-    clawSystem.extendArm(-armExtendSpeed);
-  } else{
-    clawSystem.extendArm(0);
-  }
-
-  if(secondaryController.getAButtonPressed()){
-    clawSystem.openClaw();
-  } 
-   if(secondaryController.getBButtonPressed()){
-    clawSystem.closeClaw();
-  }
-
-  //code for turning the roller on and off :3
-  if(secondaryController.getXButtonPressed()){
-    clawSystem.rollerIn();
-  }
-  if(secondaryController.getXButtonReleased()){
-    clawSystem.rollerStop();
-  }
-  if(secondaryController.getYButtonPressed()){
-    clawSystem.rollerOut();
-  }
-  if(secondaryController.getYButtonReleased()){
-    clawSystem.rollerStop();
-  }
-  
-
-//extending arm on second controller
-  // if(secondaryController.getRightBumper()){ 
-  //   extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
-  //   clawSystem.extendArm(extendSet);
-  // } else if (secondaryController.getLeftBumper()){
-  //   extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
-  //   clawSystem.extendArm(extendSet);
-  // } 
-  // System.out.println(extendSet);
-  // clawSystem.extendArm(extendSet);
-
-
-  // our own very special deadband method!!!
-    if(secondaryController.getRightY() < 0.02 && secondaryController.getRightY() > -0.02){
-      extendController = 0;
-    } else {
-      extendController = secondaryController.getRightY();
+    /** Creates a new DefaultTurret. */
+    public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
+        // Use addRequirements() here to declare subsystem dependencies.
+        addRequirements(clawSystem);
+        this.primaryController = primaryController;
+        this.secondaryController = secondaryController;
+        this.clawSystem = clawSystem;
     }
 
-    if(secondaryController.getLeftY() < 0.02 && secondaryController.getLeftY() > -0.02){
-      moveController = 0;
-    } else {
-      moveController = secondaryController.getLeftY();
+    // Called when the command is initially scheduled.
+    @Override
+    public void initialize() {}
+
+    // Called every time the scheduler runs while the command is scheduled.
+    @Override
+        public void execute() {
+
+        //code for turntable
+        if (primaryController.getRightBumper()) {
+            clawSystem.spinTable(TableSpinSpeed);
+        } else if (primaryController.getLeftBumper()) {
+            clawSystem.spinTable(-TableSpinSpeed);
+        } else {
+            clawSystem.spinTable(0);
+        }
+
+        //code for extending arm
+        if (primaryController.getAButton()) {
+            clawSystem.extendArm(armExtendSpeed);
+        } else if (primaryController.getBButton()) {
+            clawSystem.extendArm(-armExtendSpeed);
+        } else {
+            clawSystem.extendArm(0);
+        }
+
+        //code for claw
+        if (secondaryController.getAButtonPressed()) {
+            clawSystem.openClaw();
+        } 
+        if (secondaryController.getBButtonPressed()) {
+            clawSystem.closeClaw();
+        }
+
+        //code for turning the roller on and off :3
+        if (secondaryController.getXButtonPressed()) {
+            clawSystem.rollerIn();
+        }
+        if (secondaryController.getXButtonReleased()) {
+            clawSystem.rollerStop();
+        }
+        if (secondaryController.getYButtonPressed()) {
+            clawSystem.rollerOut();
+        }
+        if (secondaryController.getYButtonReleased()) {
+            clawSystem.rollerStop();
+        }
+
+        //extending arm on second controller
+        // if (secondaryController.getRightBumper()) { 
+        //   extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
+        //   clawSystem.extendArm(extendSet);
+        // } else if (secondaryController.getLeftBumper()){
+        //   extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
+        //   clawSystem.extendArm(extendSet);
+        // } 
+        // System.out.println(extendSet);
+        // clawSystem.extendArm(extendSet);
+
+        // our own very special deadband method!!!
+        if (secondaryController.getRightY() < 0.02 && secondaryController.getRightY() > -0.02) {
+            extendController = 0;
+        } else {
+            extendController = secondaryController.getRightY();
+        }
+
+        if (secondaryController.getLeftY() < 0.02 && secondaryController.getLeftY() > -0.02) {
+            moveController = 0;
+        } else {
+            moveController = secondaryController.getLeftY();
+        }
+
+        extendSet = MathUtil.clamp(-extendController + extendSet, 0, 45);
+        clawSystem.extendArm(extendSet);
+        // else {
+        //   clawSystem.extendArm(extendSet);
+        // }
+
+        // //sets setpoint for PID
+        // if(secondaryController.getXButton()){
+        //   set = set + 0.1;
+        // } 
+        //  if(secondaryController.getYButton()){
+        //   set = set - 0.1;
+        // }
+        //secondarycontroller > 0.1 thing
+
+        clawSystem.spinTable(secondaryController.getLeftX()/8);
+        // clawSystem.moveArm(secondaryController.getLeftX()*1/50);
+        //clawSystem.moveArm(set);
+        
+        set -= moveController / 4; // Changed from: set = (-moveController / 4) + set; I hope it works
+        clawSystem.moveArm(set);
     }
 
+    // Called once the command ends or is interrupted.
+    @Override
+    public void end(boolean interrupted) {}
 
-  extendSet = MathUtil.clamp(-extendController + extendSet, 0, 45);
-  clawSystem.extendArm(extendSet);
-  // else {
-  //   clawSystem.extendArm(extendSet);
-  // }
-
-  // //sets setpoint for PID
-  // if(secondaryController.getXButton()){
-  //   set = set + 0.1;
-  // } 
-  //  if(secondaryController.getYButton()){
-  //   set = set - 0.1;
-  // }
-//secondarycontroller > 0.1 thing
-
-  clawSystem.spinTable(secondaryController.getLeftX()/8);
-// clawSystem.moveArm(secondaryController.getLeftX()*1/50);
-//clawSystem.moveArm(set);
-set = (-moveController / 4) + set;
-clawSystem.moveArm(set);
-
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {}
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
+    // Returns true when the command should end.
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

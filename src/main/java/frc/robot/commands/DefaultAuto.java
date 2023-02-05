@@ -12,25 +12,23 @@ public class DefaultAuto extends CommandBase{
     Drivetrain drivetrain;
     ClawSystem clawSystem;
 
-
     public DefaultAuto(Drivetrain drivetrain, ClawSystem clawSystem){
 
         addRequirements(drivetrain);
         this.drivetrain = drivetrain;
         this.clawSystem = clawSystem;
-
     }
 
-        @Override
+    @Override
     public void initialize() { /* nothing */}
 
-        @Override
+    @Override
     public void execute() { /* stuff */}
 
-        @Override
+    @Override
     public void end(boolean interrupted){ /* nothing */}
 
-        @Override
+    @Override
     public boolean isFinished() {
         return false;
     }
