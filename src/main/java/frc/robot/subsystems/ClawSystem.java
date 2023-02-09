@@ -22,12 +22,12 @@ public class ClawSystem extends SubsystemBase {
 	private CANSparkMax roller = new CANSparkMax(30, MotorType.kBrushed);
 	private PneumaticsControlModule pCM;
 	private final DoubleSolenoid armSolenoid;
-	private final Encoder arm2 = new new Encoder(0, 1);
+	private final Encoder arm2 = new Encoder(0, 1);
 
 	//p 0.5
 	//good values for position controll p 0.4 i 0 d 0.002
-	private final PIDController armPID = new PIDController(0.4, 0, 0.002);
-	private final PIDController extendPID = new PIDController(0.3, 0, 0);
+	private final PIDController armPID = new PIDController(0.05, 0, 0.001);
+	private final PIDController extendPID = new PIDController(0.2, 0, 0.001);
 
 	/** Creates a new ClawSystem. */
 	public ClawSystem(PneumaticsControlModule pCM) {
@@ -46,8 +46,8 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void moveArm(double setpoint){
-		arm.set(MathUtil.clamp(armPID.calculate(/*arm*/arm2.getEncoder().getPosition(), setpoint), -0.5, 0.5));
-		System.out.println(MathUtil.clamp(armPID.calculate(arm2.getEncoder().getPosition(), setpoint), -0.5, 0.5));
+		arm.set(-MathUtil.clamp(armPID.calculate(/*arm*/arm2.getDistance(), setpoint), -1, 1));
+		System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(), setpoint), -1, 1));
 	}
 
 	public void extendArm(double extendSetpoint){

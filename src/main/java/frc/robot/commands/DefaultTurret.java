@@ -93,19 +93,19 @@ public class DefaultTurret extends CommandBase {
         // clawSystem.extendArm(extendSet);
 
         // our own very special deadband method!!!
-        if (secondaryController.getRightY() < 0.02 && secondaryController.getRightY() > -0.02) {
+        if (secondaryController.getRightY() < 0.03 && secondaryController.getRightY() > -0.03) {
             extendController = 0;
         } else {
             extendController = secondaryController.getRightY();
         }
 
-        if (secondaryController.getLeftY() < 0.02 && secondaryController.getLeftY() > -0.02) {
+        if (secondaryController.getLeftY() < 0.03 && secondaryController.getLeftY() > -0.03) {
             moveController = 0;
         } else {
             moveController = secondaryController.getLeftY();
         }
 
-        extendSet = MathUtil.clamp(-extendController + extendSet, 0, 45);
+        extendSet = MathUtil.clamp(-extendController + extendSet, 0, 40);
         clawSystem.extendArm(extendSet);
         // else {
         //   clawSystem.extendArm(extendSet);
@@ -120,11 +120,11 @@ public class DefaultTurret extends CommandBase {
         // }
         //secondarycontroller > 0.1 thing
 
-        clawSystem.spinTable(secondaryController.getLeftX()/8);
+        clawSystem.spinTable(secondaryController.getLeftX()/2);
         // clawSystem.moveArm(secondaryController.getLeftX()*1/50);
         //clawSystem.moveArm(set);
         
-        set -= moveController / 4; // Changed from: set = (-moveController / 4) + set; I hope it works
+        set -= moveController * 10; // Changed from: set = (-moveController / 4) + set; I hope it works
         clawSystem.moveArm(set);
     }
 
