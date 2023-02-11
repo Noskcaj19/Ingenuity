@@ -23,10 +23,16 @@ public class DefaultAuto extends CommandBase{
     public void initialize() { /* nothing */}
 
     @Override
-    public void execute() { /* stuff */}
+    public void execute() {
+    // if something breaks comment out the next three lines and the drive.java command
+    // i still can't see error messages </3 -miles
+        new SequentialCommandGroup(
+            new Drive(drivetrain, 0.1)
+        ).schedule();
+    }
 
     @Override
-    public void end(boolean interrupted){ /* nothing */}
+    public void end(boolean interrupted) { /* nothing */}
 
     @Override
     public boolean isFinished() {
