@@ -24,11 +24,26 @@ public class DefaultAuto extends CommandBase{
 
     @Override
     public void execute() {
-    // if something breaks comment out the next three lines and the drive.java command
-    // i still can't see error messages </3 -miles
+
         new SequentialCommandGroup(
             new Drive(drivetrain, 0.1)
         ).schedule();
+
+    // proposed command structure:
+
+    /*  
+        new SequentialCommandGroup(
+            new AlignPole(clawSystem).withTimeout(0.1),
+            new Reach(clawSystem, +speed).withTimeout(time),
+            new Lower(clawSystem),
+            new OpenClaw(clawSystem),
+            new Raise(clawSystem),
+            new Reach(clawSystem, -speed).withTimeout(time),
+            new DriveBackwards(drivetrain, distance),
+            new Align(no idea how to do this one)
+            ).schedule();
+    */
+
     }
 
     @Override
