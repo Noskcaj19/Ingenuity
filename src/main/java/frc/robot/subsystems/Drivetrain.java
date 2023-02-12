@@ -35,11 +35,15 @@ public class Drivetrain extends SubsystemBase {
     Translation2d m_backLeftLocation = new Translation2d(0.305, -0.257175);
     Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
 
+
+
+
+
     //Odometry stuffs
-    // public static final double kGearRatio = 10.71;
-    // public static final double kWheelRadius = 0.076;
-    // public static final double kEncoderResolution = 2048;
-    // public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
+    public static final double kGearRatio = 10.71;
+    public static final double kWheelRadius = 0.076;
+    public static final double kEncoderResolution = 2048;
+    public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
 
     private final MecanumDriveKinematics kinematics = new MecanumDriveKinematics(m_backLeftLocation, m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
     private final MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
@@ -75,6 +79,26 @@ public class Drivetrain extends SubsystemBase {
         initAngle = navx.getRotation2d();
     }
 
+    public void zeroSensors() {
+        // driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
+        // Rotation2d.fromDegrees(navx.getYaw()));
+        // navx.zeroYaw();
+        leftFront.setSelectedSensorPosition(0);
+        rightFront.setSelectedSensorPosition(0);
+        leftRear.setSelectedSensorPosition(0);
+        rightRear.setSelectedSensorPosition(0);
+      }
+
+      public double getDistance() {
+        double leftMotor = leftFront.getSelectedSensorPosition() * kDistancePerTick;
+        double rightMotor = -rightFront.getSelectedSensorPosition() * kDistancePerTick;
+    
+        double averageMove = (leftMotor + rightMotor) / 2;
+    
+        return -averageMove;
+    
+      }
+    
     // public double getRRDistance() {
     //     double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
     //     return distance;

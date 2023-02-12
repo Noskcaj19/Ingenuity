@@ -6,9 +6,12 @@ import frc.robot.subsystems.Drivetrain;
 
 public class Drive extends CommandBase {
 
+private Drivetrain drivetrain;
+private double distance;
+
     public Drive(Drivetrain drivetrain, double distance) {
         addRequirements(drivetrain);
-        public Command schedule;
+        
         this.drivetrain = drivetrain;
         this.distance = distance;
     }
@@ -40,7 +43,7 @@ public class Drive extends CommandBase {
     public boolean isFinished() {
     // if the distance has been reached, the command is finished
     // otherwise, the command is not finished
-        if (drivetrain.detDistance() > distance){
+        if (drivetrain.getDistance() > distance){
             return true;
         } else {
             return false;
