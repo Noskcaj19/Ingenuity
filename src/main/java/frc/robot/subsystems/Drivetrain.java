@@ -15,6 +15,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
 import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
@@ -28,6 +29,9 @@ public class Drivetrain extends SubsystemBase {
     private final WPI_TalonFX leftRear = new WPI_TalonFX(5);
     private final WPI_TalonFX rightFront = new WPI_TalonFX(4);
 
+    private final MotorControllerGroup leftMotors = new MotorControllerGroup(leftFront, leftRear);
+    private final MotorControllerGroup rightMotors = new MotorControllerGroup(rightFront, rightRear);
+  
     //Encoder encoder = new Encoder(0,1);
 
     Translation2d m_frontLeftLocation = new Translation2d(0.305, 0.257175);
@@ -92,6 +96,7 @@ public class Drivetrain extends SubsystemBase {
       public double getDistance() {
         double leftMotor = leftFront.getSelectedSensorPosition() * kDistancePerTick;
         double rightMotor = -rightFront.getSelectedSensorPosition() * kDistancePerTick;
+ 
     
         double averageMove = (leftMotor + rightMotor) / 2;
     
