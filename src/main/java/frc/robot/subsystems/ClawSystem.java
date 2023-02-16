@@ -47,7 +47,7 @@ public class ClawSystem extends SubsystemBase {
 
 	public void moveArm(double setpoint){
 		arm.set(-MathUtil.clamp(armPID.calculate(/*arm*/arm2.getDistance(), setpoint), -1, 1));
-		System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(), setpoint), -1, 1));
+		//System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(), setpoint), -1, 1));
 	}
 
 	public void extendArm(double extendSetpoint){

@@ -40,7 +40,7 @@ public class DefaultTurret extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
         public void execute() {
-
+        System.out.println(set);
         //code for turntable
         if (primaryController.getRightBumper()) {
             clawSystem.spinTable(TableSpinSpeed);
@@ -125,7 +125,9 @@ public class DefaultTurret extends CommandBase {
         //clawSystem.moveArm(set);
         
         set -= moveController * 10; // Changed from: set = (-moveController / 4) + set; I hope it works
+        set = MathUtil.clamp(set, -580.0, 450.0);
         clawSystem.moveArm(set);
+       
     }
 
     // Called once the command ends or is interrupted.
