@@ -90,6 +90,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         // write auto code once we get full robot
-        return new FinalAuto(drive, drivetrain);
+        return new FinalAuto(drive, drivetrain, clawSystem);
     }
 }

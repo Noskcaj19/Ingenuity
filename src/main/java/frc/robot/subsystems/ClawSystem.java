@@ -48,6 +48,10 @@ public class ClawSystem extends SubsystemBase {
 				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
 	}
 
+	public double getArmExtendPosition() {
+		return arm2.getDistance();
+	}
+
 	public void spinTable(double speed) {
 		turnTable.set(-speed);
 	}
