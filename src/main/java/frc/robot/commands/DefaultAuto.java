@@ -27,7 +27,7 @@ public class DefaultAuto extends CommandBase {
     public void execute() {
 
         new SequentialCommandGroup(
-                new Drive(drivetrain, 0.1)).schedule();
+                new Drive(drivetrain, 0.1, 0.1)).schedule();
 
         // proposed command structure:
 

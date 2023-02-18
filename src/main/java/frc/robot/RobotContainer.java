@@ -44,7 +44,7 @@ public class RobotContainer {
     private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
     private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
     private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
-    private final Drive drive = new Drive(drivetrain, 1.3);
+    private final Drive drive = new Drive(drivetrain, 1.3, 0.1);
     private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);
 
     /**

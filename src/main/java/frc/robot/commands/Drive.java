@@ -8,12 +8,24 @@ public class Drive extends CommandBase {
 
     private Drivetrain drivetrain;
     private double distance;
+    private double rotation = 0;
+    private double speed;
 
-    public Drive(Drivetrain drivetrain, double distance) {
+    public Drive(Drivetrain drivetrain, double distance, double speed) {
         addRequirements(drivetrain);
 
         this.drivetrain = drivetrain;
         this.distance = distance;
+        this.speed = speed;
+    }
+
+    public Drive(Drivetrain drivetrain, double distance, double speed, double rotation) {
+        addRequirements(drivetrain);
+
+        this.drivetrain = drivetrain;
+        this.distance = distance;
+        this.rotation = rotation;
+        this.speed = speed;
     }
 
     @Override
@@ -30,7 +42,7 @@ public class Drive extends CommandBase {
         // if the robot has not reached the set distance, keep driving
         // otherwise, (if the distance has been reached), stop
         if (drivetrain.getDistance() < distance) {
-            drivetrain.driveMecanum(0, 1, 0);
+            drivetrain.driveMecanum(speed, 0, 0);
         } else {
             drivetrain.driveMecanum(0, 0, 0);
         }
@@ -44,7 +56,7 @@ public class Drive extends CommandBase {
     public boolean isFinished() {
         // if the distance has been reached, the command is finished
         // otherwise, the command is not finished
-        if (drivetrain.getDistance() > distance) {
+        if (drivetrain.getDistance() >= distance) {
             return true;
         } else {
             return false;
