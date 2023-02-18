@@ -30,7 +30,7 @@ private double distance;
     // if the robot has not reached the set distance, keep driving
     // otherwise, (if the distance has been reached), stop
         if (drivetrain.getDistance() < distance){
-            drivetrain.driveMecanum(0, 0.1, 0);
+            drivetrain.driveMecanum(0, 1, 0);
         } else {
             drivetrain.driveMecanum(0, 0, 0);
         }
