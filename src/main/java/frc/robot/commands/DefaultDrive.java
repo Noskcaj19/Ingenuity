@@ -28,7 +28,7 @@ public class DefaultDrive extends CommandBase {
     @Override
     public void execute() {
 
-        drivetrain.driveMecanum(
+        drivetrain.driveFieldOriented(
                 -primaryController.getLeftY() * .4,
                 primaryController.getLeftX() * .4,
                 primaryController.getRightX() * .4);

@@ -81,10 +81,16 @@ public class Drivetrain extends SubsystemBase {
             wheelMotor.configFactoryDefault();
             wheelMotor.setNeutralMode(NeutralMode.Brake);
         }
+
+
+    }
+
+    public void driveFieldOriented(double x, double y, double rotation) {
+        drivetrain.driveCartesian(x, y, rotation, navx.getRotation2d().minus(initAngle));
     }
 
     public void driveMecanum(double x, double y, double rotation) {
-        drivetrain.driveCartesian(x, y, rotation, navx.getRotation2d().minus(initAngle));
+        drivetrain.driveCartesian(x, y, rotation);
     }
 
     public void zero() {
