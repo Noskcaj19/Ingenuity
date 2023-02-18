@@ -19,9 +19,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (i        ncluding
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (i ncluding
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 
@@ -29,22 +32,24 @@ public class RobotContainer {
 
     private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
 
-    //Controllers
+    // Controllers
     private final XboxController primaryController = new XboxController(0);
     private final XboxController secondaryController = new XboxController(1);
 
-    //Subsystems
+    // Subsystems
     private final ClawSystem clawSystem = new ClawSystem(pCM);
-    private final Drivetrain drivetrain = new Drivetrain(); 
+    private final Drivetrain drivetrain = new Drivetrain();
 
-    //commands
+    // commands
     private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
     private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
     private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
     private final Drive drive = new Drive(drivetrain, 1.3);
     private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    /**
+     * The container for the robot. Contains subsystems, OI devices, and commands.
+     */
     public RobotContainer() {
         // Configure the trigger bindings
         configureBindings();
@@ -53,22 +58,28 @@ public class RobotContainer {
     }
 
     /**
-     * Use this method to define your trigger->command mappings. Triggers can be created via the
-     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+     * Use this method to define your trigger->command mappings. Triggers can be
+     * created via the
+     * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+     * an arbitrary
      * predicate, or via the named factories in {@link
-     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-     * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-     * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+     * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+     * {@link
+     * CommandXboxController
+     * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+     * PS4} controllers or
+     * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
      * joysticks}.
      */
     private void configureBindings() {
         // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
         // new Trigger(m_exampleSubsystem::exampleCondition)
-        //     .onTrue(new ExampleCommand(m_exampleSubsystem));
+        // .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-        // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
+        // Schedule `exampleMethodCommand` when the Xbox controller's B button is
+        // pressed,
         // cancelling on release.
-        //m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
     }
 
     /**
@@ -78,7 +89,7 @@ public class RobotContainer {
      */
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
-        //write auto code once we get full robot
+        // write auto code once we get full robot
         return finalAuto;
     }
 }

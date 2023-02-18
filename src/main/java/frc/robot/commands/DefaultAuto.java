@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-public class DefaultAuto extends CommandBase{
+public class DefaultAuto extends CommandBase {
     Drivetrain drivetrain;
     ClawSystem clawSystem;
 
-    public DefaultAuto(Drivetrain drivetrain, ClawSystem clawSystem){
+    public DefaultAuto(Drivetrain drivetrain, ClawSystem clawSystem) {
 
         addRequirements(drivetrain);
         this.drivetrain = drivetrain;
@@ -20,34 +20,35 @@ public class DefaultAuto extends CommandBase{
     }
 
     @Override
-    public void initialize() { /* nothing */}
+    public void initialize() {
+        /* nothing */}
 
     @Override
     public void execute() {
 
         new SequentialCommandGroup(
-            new Drive(drivetrain, 0.1)
-        ).schedule();
+                new Drive(drivetrain, 0.1)).schedule();
 
-    // proposed command structure:
+        // proposed command structure:
 
-    /*  
-        new SequentialCommandGroup(
-            new AlignPole(clawSystem).withTimeout(0.1),
-            new Reach(clawSystem, +speed).withTimeout(time),
-            new Lower(clawSystem),
-            new OpenClaw(clawSystem),
-            new Raise(clawSystem),
-            new Reach(clawSystem, -speed).withTimeout(time),
-            new DriveBackwards(drivetrain, distance),
-            new Align(no idea how to do this one)
-            ).schedule();
-    */
+        /*
+         * new SequentialCommandGroup(
+         * new AlignPole(clawSystem).withTimeout(0.1),
+         * new Reach(clawSystem, +speed).withTimeout(time),
+         * new Lower(clawSystem),
+         * new OpenClaw(clawSystem),
+         * new Raise(clawSystem),
+         * new Reach(clawSystem, -speed).withTimeout(time),
+         * new DriveBackwards(drivetrain, distance),
+         * new Align(no idea how to do this one)
+         * ).schedule();
+         */
 
     }
 
     @Override
-    public void end(boolean interrupted) { /* nothing */}
+    public void end(boolean interrupted) {
+        /* nothing */}
 
     @Override
     public boolean isFinished() {

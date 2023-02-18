@@ -29,11 +29,12 @@ public class DefaultDrive extends CommandBase {
     public void execute() {
 
         drivetrain.driveMecanum(-primaryController.getLeftY() * .4, primaryController.getLeftX() * .4,
-        primaryController.getRightX() * .4);
+                primaryController.getRightX() * .4);
         if (primaryController.getStartButton()) {
             drivetrain.zero();
         }
-        // drivetrain.driveMecanum(primaryController.getRightY() * .3, primaryController.getLeftX() * .3,
+        // drivetrain.driveMecanum(primaryController.getRightY() * .3,
+        // primaryController.getLeftX() * .3,
         // primaryController.getRightX() * .3);
     }
 

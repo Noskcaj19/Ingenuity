@@ -24,8 +24,8 @@ public class ClawSystem extends SubsystemBase {
 	private final DoubleSolenoid armSolenoid;
 	private final Encoder arm2 = new Encoder(0, 1);
 
-	//p 0.5
-	//good values for position controll p 0.4 i 0 d 0.002
+	// p 0.5
+	// good values for position controll p 0.4 i 0 d 0.002
 	private final PIDController armPID = new PIDController(0.05, 0, 0.001);
 	private final PIDController extendPID = new PIDController(0.2, 0, 0.001);
 
@@ -33,7 +33,7 @@ public class ClawSystem extends SubsystemBase {
 	public ClawSystem(PneumaticsControlModule pCM) {
 		this.pCM = pCM;
 		armSolenoid = pCM.makeDoubleSolenoid(6, 7);
-		//armSolenoid.set(Value.kForward);
+		// armSolenoid.set(Value.kForward);
 	}
 
 	@Override
@@ -41,36 +41,38 @@ public class ClawSystem extends SubsystemBase {
 		// This method will be called once per scheduler run
 	}
 
-	public void spinTable(double speed){
+	public void spinTable(double speed) {
 		turnTable.set(speed);
 	}
 
-	public void moveArm(double setpoint){
-		arm.set(-MathUtil.clamp(armPID.calculate(/*arm*/arm2.getDistance(), setpoint), -1, 1));
-		//System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(), setpoint), -1, 1));
+	public void moveArm(double setpoint) {
+		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance(), setpoint), -1, 1));
+		// System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(),
+		// setpoint), -1, 1));
 	}
 
-	public void extendArm(double extendSetpoint){
-		extender.set(MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition(), extendSetpoint), -0.7, 0.7));
+	public void extendArm(double extendSetpoint) {
+		extender.set(
+				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition(), extendSetpoint), -0.7, 0.7));
 	}
 
-	public void openClaw(){
+	public void openClaw() {
 		armSolenoid.set(Value.kForward);
 	}
 
-	public void closeClaw(){
+	public void closeClaw() {
 		armSolenoid.set(Value.kReverse);
 	}
 
-	public void rollerIn(){
+	public void rollerIn() {
 		roller.set(0.5);
 	}
 
-	public void rollerOut(){
+	public void rollerOut() {
 		roller.set(-0.5);
 	}
 
-	public void rollerStop(){
+	public void rollerStop() {
 		roller.set(0);
 	}
 

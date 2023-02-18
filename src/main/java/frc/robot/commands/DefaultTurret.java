@@ -35,13 +35,14 @@ public class DefaultTurret extends CommandBase {
 
     // Called when the command is initially scheduled.
     @Override
-    public void initialize() {}
+    public void initialize() {
+    }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
-        public void execute() {
+    public void execute() {
         System.out.println(set);
-        //code for turntable
+        // code for turntable
         if (primaryController.getRightBumper()) {
             clawSystem.spinTable(TableSpinSpeed);
         } else if (primaryController.getLeftBumper()) {
@@ -50,7 +51,7 @@ public class DefaultTurret extends CommandBase {
             clawSystem.spinTable(0);
         }
 
-        //code for extending arm
+        // code for extending arm
         if (primaryController.getAButton()) {
             clawSystem.extendArm(armExtendSpeed);
         } else if (primaryController.getBButton()) {
@@ -59,15 +60,15 @@ public class DefaultTurret extends CommandBase {
             clawSystem.extendArm(0);
         }
 
-        //code for claw
+        // code for claw
         if (secondaryController.getAButtonPressed()) {
             clawSystem.openClaw();
-        } 
+        }
         if (secondaryController.getBButtonPressed()) {
             clawSystem.closeClaw();
         }
 
-        //code for turning the roller on and off :3
+        // code for turning the roller on and off :3
         if (secondaryController.getXButtonPressed()) {
             clawSystem.rollerIn();
         }
@@ -81,14 +82,14 @@ public class DefaultTurret extends CommandBase {
             clawSystem.rollerStop();
         }
 
-        //extending arm on second controller
-        // if (secondaryController.getRightBumper()) { 
-        //   extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
-        //   clawSystem.extendArm(extendSet);
+        // extending arm on second controller
+        // if (secondaryController.getRightBumper()) {
+        // extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
+        // clawSystem.extendArm(extendSet);
         // } else if (secondaryController.getLeftBumper()){
-        //   extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
-        //   clawSystem.extendArm(extendSet);
-        // } 
+        // extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
+        // clawSystem.extendArm(extendSet);
+        // }
         // System.out.println(extendSet);
         // clawSystem.extendArm(extendSet);
 
@@ -108,31 +109,32 @@ public class DefaultTurret extends CommandBase {
         extendSet = MathUtil.clamp(-extendController + extendSet, 0, 40);
         clawSystem.extendArm(extendSet);
         // else {
-        //   clawSystem.extendArm(extendSet);
+        // clawSystem.extendArm(extendSet);
         // }
 
         // //sets setpoint for PID
         // if(secondaryController.getXButton()){
-        //   set = set + 0.1;
-        // } 
-        //  if(secondaryController.getYButton()){
-        //   set = set - 0.1;
+        // set = set + 0.1;
         // }
-        //secondarycontroller > 0.1 thing
+        // if(secondaryController.getYButton()){
+        // set = set - 0.1;
+        // }
+        // secondarycontroller > 0.1 thing
 
-        clawSystem.spinTable(secondaryController.getLeftX()/2);
+        clawSystem.spinTable(secondaryController.getLeftX() / 2);
         // clawSystem.moveArm(secondaryController.getLeftX()*1/50);
-        //clawSystem.moveArm(set);
-        
+        // clawSystem.moveArm(set);
+
         set -= moveController * 10; // Changed from: set = (-moveController / 4) + set; I hope it works
         set = MathUtil.clamp(set, -580.0, 450.0);
         clawSystem.moveArm(set);
-       
+
     }
 
     // Called once the command ends or is interrupted.
     @Override
-    public void end(boolean interrupted) {}
+    public void end(boolean interrupted) {
+    }
 
     // Returns true when the command should end.
     @Override

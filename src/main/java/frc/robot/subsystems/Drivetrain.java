@@ -33,49 +33,49 @@ public class Drivetrain extends SubsystemBase {
 
     private final MotorControllerGroup leftMotors = new MotorControllerGroup(leftFront, leftRear);
     private final MotorControllerGroup rightMotors = new MotorControllerGroup(rightFront, rightRear);
-  
 
-    
-    //Encoder encoder = new Encoder(0,1);
+    // Encoder encoder = new Encoder(0,1);
 
     Translation2d m_frontLeftLocation = new Translation2d(0.305, 0.257175);
     Translation2d m_frontRightLocation = new Translation2d(-0.305, 0.257175);
     Translation2d m_backLeftLocation = new Translation2d(0.305, -0.257175);
-    Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);  
-
+    Translation2d m_backRightLocation = new Translation2d(-0.305, -0.257175);
 
     private final Field2d m_feild = new Field2d();
 
-
-    //Odometry stuffs
+    // Odometry stuffs
     public static final double kGearRatio = 10.71;
     public static final double kWheelRadius = 0.076;
     public static final double kEncoderResolution = 2048;
     public static final double kDistancePerTick = (2 * Math.PI * kWheelRadius / kEncoderResolution) / kGearRatio;
 
-    private final MecanumDriveKinematics kinematics = new MecanumDriveKinematics(m_backLeftLocation, m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
+    private final MecanumDriveKinematics kinematics = new MecanumDriveKinematics(m_backLeftLocation,
+            m_backRightLocation, m_frontLeftLocation, m_frontRightLocation);
     private final MecanumDrive drivetrain = new MecanumDrive(leftFront, leftRear, rightFront, rightRear);
-    private  AHRS navx;
+    private AHRS navx;
     private Rotation2d initAngle;
-     private final MecanumDriveOdometry odometry;
+    private final MecanumDriveOdometry odometry;
 
-    public Drivetrain(){
-        
+    public Drivetrain() {
+
         SmartDashboard.putData("Field", m_feild);
-        
+
         try {
             navx = new AHRS(Port.kMXP);
             // navx.setAngleAdjustment(navx.getRotation2d().getDegrees());
             initAngle = navx.getRotation2d();
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
 
-        odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(), new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()), new Pose2d(5.0, 13.5, new Rotation2d()));
+        odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(),
+                new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()),
+                new Pose2d(5.0, 13.5, new Rotation2d()));
         rightRear.setInverted(true);
         rightFront.setInverted(true);
 
         // Setup for each wheel motor
-        WPI_TalonFX motors[] = {leftFront, leftRear, rightFront, rightRear};
-        for (WPI_TalonFX wheelMotor: motors) {
+        WPI_TalonFX motors[] = { leftFront, leftRear, rightFront, rightRear };
+        for (WPI_TalonFX wheelMotor : motors) {
             wheelMotor.configNominalOutputForward(0);
             wheelMotor.configNominalOutputReverse(0);
             wheelMotor.configFactoryDefault();
@@ -92,26 +92,25 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void zeroSensors() {
-         //driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
+        // driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
         // Rotation2d.fromDegrees(navx.getYaw()));
         // navx.zeroYaw();
         leftFront.setSelectedSensorPosition(0);
         rightFront.setSelectedSensorPosition(0);
         leftRear.setSelectedSensorPosition(0);
         rightRear.setSelectedSensorPosition(0);
-      }
+    }
 
-      public double getDistance() {
+    public double getDistance() {
         double leftMotor = leftFront.getSelectedSensorPosition() * kDistancePerTick;
         double rightMotor = -rightFront.getSelectedSensorPosition() * kDistancePerTick;
- 
-    
+
         double averageMove = (leftMotor + rightMotor) / 2;
-    
+
         return -averageMove;
-    
-      }
-    
+
+    }
+
     public double getRRDistance() {
         double distance = rightRear.getSelectedSensorPosition() * kDistancePerTick;
         return distance;
@@ -132,18 +131,19 @@ public class Drivetrain extends SubsystemBase {
         return distance;
     }
 
-    public void periodic(){
+    public void periodic() {
 
-        // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance());
+        // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(),
+        // getFRDistance(), getRLDistance(), getRRDistance());
 
         // var gyroAngle = navx.getRotation2d();
 
         // var pose = odometry.update(gyroAngle, wheelPositions);
-    
-        m_feild.setRobotPose(odometry.getPoseMeters());  
+
+        m_feild.setRobotPose(odometry.getPoseMeters());
     }
 
     // public void drive(double x, double y, double z) {
-    //     drivetrain.driveCartesian(-x, y, z);
+    // drivetrain.driveCartesian(-x, y, z);
     // }
 }
