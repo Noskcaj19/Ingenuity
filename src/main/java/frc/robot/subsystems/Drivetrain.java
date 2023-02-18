@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -64,12 +65,14 @@ public class Drivetrain extends SubsystemBase {
             navx = new AHRS(Port.kMXP);
             // navx.setAngleAdjustment(navx.getRotation2d().getDegrees());
             initAngle = navx.getRotation2d();
+            Shuffleboard.getTab("Debug").addDouble("NAVX", () -> navx.getRotation2d().minus(initAngle).getDegrees());
+
         } catch (Exception ex) {
         }
 
         odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(),
                 new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()),
-                new Pose2d(5.0, 13.5, new Rotation2d()));
+                new Pose2d(5.0, 0.5, new Rotation2d()));
         rightRear.setInverted(true);
         rightFront.setInverted(true);
 
@@ -81,7 +84,6 @@ public class Drivetrain extends SubsystemBase {
             wheelMotor.configFactoryDefault();
             wheelMotor.setNeutralMode(NeutralMode.Brake);
         }
-
 
     }
 
@@ -100,20 +102,23 @@ public class Drivetrain extends SubsystemBase {
     public void zeroSensors() {
         // driveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
         // Rotation2d.fromDegrees(navx.getYaw()));
-        // navx.zeroYaw();
+        zero();
         leftFront.setSelectedSensorPosition(0);
         rightFront.setSelectedSensorPosition(0);
         leftRear.setSelectedSensorPosition(0);
         rightRear.setSelectedSensorPosition(0);
     }
 
-    public double getDistance() {
-        double leftMotor = leftFront.getSelectedSensorPosition() * kDistancePerTick;
-        double rightMotor = -rightFront.getSelectedSensorPosition() * kDistancePerTick;
+    public Rotation2d getRotation() {
+        return navx.getRotation2d().minus(initAngle);
+    }
 
+    public double getDistance() {
+        double leftMotor = getFLDistance();
+        double rightMotor = getFRDistance();
         double averageMove = (leftMotor + rightMotor) / 2;
 
-        return -averageMove;
+        return averageMove;
 
     }
 
@@ -139,12 +144,12 @@ public class Drivetrain extends SubsystemBase {
 
     public void periodic() {
 
-        // var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(),
-        // getFRDistance(), getRLDistance(), getRRDistance());
+        var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(),
+                getFRDistance(), getRLDistance(), getRRDistance());
 
-        // var gyroAngle = navx.getRotation2d();
+        var gyroAngle = navx.getRotation2d();
 
-        // var pose = odometry.update(gyroAngle, wheelPositions);
+        odometry.update(gyroAngle, wheelPositions);
 
         m_feild.setRobotPose(odometry.getPoseMeters());
     }

@@ -45,7 +45,7 @@ public class RobotContainer {
     private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
     private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
     private final Drive drive = new Drive(drivetrain, 1.3, 0.1);
-    private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);
+    // private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);
 
     /**
      * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -90,6 +90,6 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         // write auto code once we get full robot
-        return finalAuto;
+        return new FinalAuto(drive, drivetrain);
     }
 }

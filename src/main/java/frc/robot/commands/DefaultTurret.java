@@ -41,7 +41,7 @@ public class DefaultTurret extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        System.out.println(set);
+        // System.out.println(set);
         // code for turntable
         if (primaryController.getRightBumper()) {
             clawSystem.spinTable(TableSpinSpeed);

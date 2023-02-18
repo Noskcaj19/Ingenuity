@@ -8,7 +8,6 @@ public class Drive extends CommandBase {
 
     private Drivetrain drivetrain;
     private double distance;
-    private double rotation = 0;
     private double speed;
 
     public Drive(Drivetrain drivetrain, double distance, double speed) {
@@ -19,18 +18,10 @@ public class Drive extends CommandBase {
         this.speed = speed;
     }
 
-    public Drive(Drivetrain drivetrain, double distance, double speed, double rotation) {
-        addRequirements(drivetrain);
-
-        this.drivetrain = drivetrain;
-        this.distance = distance;
-        this.rotation = rotation;
-        this.speed = speed;
-    }
-
     @Override
     public void initialize() {
         drivetrain.zeroSensors();
+        System.out.println("Initalize drive");
     }
 
     public double setDistance(double distance) {

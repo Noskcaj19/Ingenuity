@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSystem extends SubsystemBase {
@@ -34,26 +35,32 @@ public class ClawSystem extends SubsystemBase {
 		this.pCM = pCM;
 		armSolenoid = pCM.makeDoubleSolenoid(6, 7);
 		// armSolenoid.set(Value.kForward);
+		Shuffleboard.getTab("Debug").add(armPID);
+		Shuffleboard.getTab("Debug").add(extendPID);
 	}
 
 	@Override
 	public void periodic() {
+		System.out.println("Arm Target " + armPID.getSetpoint() + " actual " + arm2.getDistance());
 		// This method will be called once per scheduler run
+		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
+		extender.set(
+				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
 	}
 
 	public void spinTable(double speed) {
-		turnTable.set(speed);
+		turnTable.set(-speed);
 	}
 
 	public void moveArm(double setpoint) {
-		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance(), setpoint), -1, 1));
 		// System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(),
 		// setpoint), -1, 1));
+		armPID.setSetpoint(setpoint);
 	}
 
 	public void extendArm(double extendSetpoint) {
-		extender.set(
-				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition(), extendSetpoint), -0.7, 0.7));
+		extendPID.setSetpoint(-extendSetpoint);
+
 	}
 
 	public void openClaw() {
