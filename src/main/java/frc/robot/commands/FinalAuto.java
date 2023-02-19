@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.ChangeClawStatus.ClawStatus;
 import frc.robot.commands.Turn.Direction;
 import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
@@ -25,18 +26,18 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drive = drive;
 
         addCommands(
-                new Drive(drivetrain, .5, .3),
-                new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
-                new Turn(drivetrain, .3, 90, Direction.Clockwise),
-                new ExtendArm(clawSystem, 35),
-                new TurnTable(clawSystem, 0, .4).withTimeout(.5));
-        // THIS METHOD NEVER STOPS WITOUT TIMEOUT! DONT REMOVE IT!!!
-        // WE NEED TO ADD SETPOINT TO TURNTABLE
-
-        // new Drive(drivetrain, testDistance, -testAngle).withTimeout(.2),
-        // new Drive(drivetrain, testDistance, .1).withTimeout(.1),
-        // new Drive(drivetrain, testDistance, testAngle).withTimeout(.2),
-        // new Drive(drivetrain, testDistance, .1).withTimeout(.1));
+            new Drive(drivetrain, .5, .3),
+            new Turn(drivetrain, .3, 90, Direction.Clockwise),
+            new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
+            new MoveArm(clawSystem, -.4).withTimeout(.3),
+            new ExtendArm(clawSystem, 35).withTimeout(.1), // This might not work because idk how to get extend position
+            new MoveArm(clawSystem, .4).withTimeout(.3),
+            new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+            new TurnTable(clawSystem, 0, .4).withTimeout(.5),
+            new ChangeClawStatus(clawSystem, ClawStatus.CLOSE)
+        );
+        // SOME COMMANDS NEVER STOP WITHOUT TIMEOUT METHOD! DONT REMOVE IT!!!
+        // WE NEED TO ADD SETPOINT TO TURNTABLE LATER
 
     }
 

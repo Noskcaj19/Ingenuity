@@ -4,44 +4,56 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSystem;
 
-public class ExtendArm extends CommandBase {
+public class ChangeClawStatus extends CommandBase {
+    enum ClawStatus {
+        OPEN,
+        CLOSE
+    }
 
     private ClawSystem clawSystem;
-    private double setpoint;
+    private ClawStatus status;
+    private boolean isFinished;
 
-    public ExtendArm(ClawSystem clawSystem, double setpoint) {
+    public ChangeClawStatus(ClawSystem clawSystem, ClawStatus status) {
         addRequirements(clawSystem);
-        this.setpoint = MathUtil.clamp(setpoint, 0, 40);
-
+        this.clawSystem = clawSystem;
+        this.status = status;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("Arm started extending");
+        if (status == ClawStatus.OPEN)
+            System.out.println("Claw started opening");
+        else
+            System.out.println("Claw started closing");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        clawSystem.extendArm(setpoint);
+        if (status == ClawStatus.OPEN)
+            clawSystem.openClaw();
+        else
+            clawSystem.closeClaw();
+        isFinished = true;
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Arm stopped extending");
+        if (status == ClawStatus.OPEN)
+            System.out.println("Claw stopped opening");
+        else
+            System.out.println("Claw stopped closing");
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (clawSystem.getArmExtendPosition() == setpoint)
-            return true;
-        return false;
+        return isFinished;
     }
 }

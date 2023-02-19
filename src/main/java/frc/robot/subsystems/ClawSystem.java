@@ -49,6 +49,12 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public double getArmExtendPosition() {
+		// This probably doesnt work
+		// return armPID.getDistance();
+		return 0;
+	}
+
+	public double getArmPosition() {
 		return arm2.getDistance();
 	}
 
