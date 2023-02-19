@@ -37,39 +37,50 @@ public class ClawSystem extends SubsystemBase {
 		// armSolenoid.set(Value.kForward);
 		Shuffleboard.getTab("Debug").add(armPID);
 		Shuffleboard.getTab("Debug").add(extendPID);
+
+		armPID.setTolerance(5);
+		extendPID.setTolerance(2);
 	}
 
 	@Override
 	public void periodic() {
-		System.out.println("Arm Target " + armPID.getSetpoint() + " actual " + arm2.getDistance());
+		// System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
+		// arm2.getDistance());
 		// This method will be called once per scheduler run
+
 		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
 		extender.set(
 				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
 	}
 
-	public double getArmExtendPosition() {
-		// This probably doesnt work
-		// return armPID.getDistance();
-		return 0;
+	public boolean extendAtSetpoint() {
+		return extendPID.atSetpoint();
 	}
 
-	public double getArmPosition() {
-		return arm2.getDistance();
+	public boolean armAtSetpoint() {
+		return armPID.atSetpoint();
 	}
 
 	public void spinTable(double speed) {
 		turnTable.set(-speed);
 	}
 
-	public void moveArm(double setpoint) {
-		// System.out.println(-MathUtil.clamp(armPID.calculate(arm2.getDistance(),
-		// setpoint), -1, 1));
-		armPID.setSetpoint(setpoint);
+	public double getExtendSetPoint() {
+
+		return extendPID.getSetpoint();
 	}
 
-	public void extendArm(double extendSetpoint) {
-		extendPID.setSetpoint(-extendSetpoint);
+	public double getArmSetPoint() {
+
+		return armPID.getSetpoint();
+	}
+
+	public void setExtendSetPoint(double setpoint) {
+		extendPID.setSetpoint(-MathUtil.clamp(setpoint, 0, 40));
+	}
+
+	public void setArmSetPoint(double setpoint) {
+		armPID.setSetpoint(MathUtil.clamp(setpoint, -580.0, 450.0));
 
 	}
 

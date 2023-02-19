@@ -2,46 +2,51 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSystem;
-import java.time.LocalTime;
 
-public class TurnTable extends CommandBase {
+public class MoveArm extends CommandBase {
 
-    ClawSystem clawSystem;
-    private double speed;
+    private ClawSystem clawSystem;
     private double setpoint;
 
-    public TurnTable(ClawSystem clawSystem, double setpoint, double speed) {
+    public MoveArm(ClawSystem clawSystem, double setpoint) {
         addRequirements(clawSystem);
-        this.setpoint = setpoint;
-        this.speed = speed;
+        this.clawSystem = clawSystem;
+        this.setpoint = MathUtil.clamp(setpoint, -580.0, 450.0);
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("Table started turning");
-
+        System.out.println("Arm started moving");
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        clawSystem.spinTable(speed);
+        System.out.println("the setpoint is " + setpoint);
+        clawSystem.setArmSetPoint(setpoint);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Table stopped turning");
+        System.out.println("Arm stopped moving");
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false;
+        // We might want to use clamp to check if the current position is in approximate
+        // range
+        // since it might never equal to setpoint exactly
+
+        return clawSystem.armAtSetpoint();
+        // return false;
+
     }
 }

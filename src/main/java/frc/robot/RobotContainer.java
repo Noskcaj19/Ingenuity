@@ -8,8 +8,8 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultTurret;
 import frc.robot.commands.Drive;
-import frc.robot.commands.FinalAuto;
-import frc.robot.commands.DefaultAuto;
+import frc.robot.commands.auto.DefaultAuto;
+import frc.robot.commands.auto.FinalAuto;
 import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
@@ -30,6 +30,9 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 public class RobotContainer {
 
+    // other
+    private final Robot robot = new Robot();
+
     private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
 
     // Controllers
@@ -42,7 +45,8 @@ public class RobotContainer {
 
     // commands
     private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
-    private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
+    private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController,
+            robot);
     private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
     private final Drive drive = new Drive(drivetrain, 1.3, 0.1);
     // private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);

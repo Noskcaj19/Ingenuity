@@ -7,6 +7,7 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.subsystems.ClawSystem;
 
 public class DefaultTurret extends CommandBase {
@@ -18,19 +19,21 @@ public class DefaultTurret extends CommandBase {
     private double extendController = 0;
     private double moveController = 0;
     private double extendSet = 0;
-    private double set = 0;
 
     private XboxController primaryController;
     private XboxController secondaryController;
     private ClawSystem clawSystem;
+    private Robot robot;
 
     /** Creates a new DefaultTurret. */
-    public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
+    public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController,
+            Robot robot) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(clawSystem);
         this.primaryController = primaryController;
         this.secondaryController = secondaryController;
         this.clawSystem = clawSystem;
+        this.robot = robot;
     }
 
     // Called when the command is initially scheduled.
@@ -47,17 +50,13 @@ public class DefaultTurret extends CommandBase {
             clawSystem.spinTable(TableSpinSpeed);
         } else if (primaryController.getLeftBumper()) {
             clawSystem.spinTable(-TableSpinSpeed);
-        } else {
-            clawSystem.spinTable(0);
         }
 
         // code for extending arm
         if (primaryController.getAButton()) {
-            clawSystem.extendArm(armExtendSpeed);
+            clawSystem.setExtendSetPoint(armExtendSpeed);
         } else if (primaryController.getBButton()) {
-            clawSystem.extendArm(-armExtendSpeed);
-        } else {
-            clawSystem.extendArm(0);
+            clawSystem.setExtendSetPoint(-armExtendSpeed);
         }
 
         // code for claw
@@ -85,13 +84,26 @@ public class DefaultTurret extends CommandBase {
         // extending arm on second controller
         // if (secondaryController.getRightBumper()) {
         // extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
-        // clawSystem.extendArm(extendSet);
+        // clawSystem.setExtendSetPoint(extendSet);
         // } else if (secondaryController.getLeftBumper()){
         // extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
-        // clawSystem.extendArm(extendSet);
+        // clawSystem.setExtendSetPoint(extendSet);
         // }
         // System.out.println(extendSet);
-        // clawSystem.extendArm(extendSet);
+        // clawSystem.setExtendSetPoint(extendSet);
+
+        // else {
+        // clawSystem.setExtendSetPoint(extendSet);
+        // }
+
+        // //sets setpoint for PID
+        // if(secondaryController.getXButton()){
+        // set = set + 0.1;
+        // }
+        // if(secondaryController.getYButton()){
+        // set = set - 0.1;
+        // }
+        // secondarycontroller > 0.1 thing
 
         // our own very special deadband method!!!
         if (secondaryController.getRightY() < 0.03 && secondaryController.getRightY() > -0.03) {
@@ -106,28 +118,16 @@ public class DefaultTurret extends CommandBase {
             moveController = secondaryController.getLeftY();
         }
 
-        extendSet = MathUtil.clamp(-extendController + extendSet, 0, 40);
-        clawSystem.extendArm(extendSet);
-        // else {
-        // clawSystem.extendArm(extendSet);
-        // }
-
-        // //sets setpoint for PID
-        // if(secondaryController.getXButton()){
-        // set = set + 0.1;
-        // }
-        // if(secondaryController.getYButton()){
-        // set = set - 0.1;
-        // }
-        // secondarycontroller > 0.1 thing
+        extendSet = -extendController + clawSystem.getExtendSetPoint();
+        // clawSystem.setExtendSetPoint(extendSet);
 
         clawSystem.spinTable(secondaryController.getLeftX() / 2);
-        // clawSystem.moveArm(secondaryController.getLeftX()*1/50);
-        // clawSystem.moveArm(set);
+        // setArmSetPoint(secondaryController.getLeftX()*1/50);
+        // setArmSetPoint(set);
 
-        set -= moveController * 10; // Changed from: set = (-moveController / 4) + set; I hope it works
-        set = MathUtil.clamp(set, -580.0, 450.0);
-        clawSystem.moveArm(set);
+        var armAdjust = moveController * 10;
+        var armSetpoint = armAdjust + clawSystem.getArmSetPoint();
+        clawSystem.setArmSetPoint(armSetpoint);
 
     }
 

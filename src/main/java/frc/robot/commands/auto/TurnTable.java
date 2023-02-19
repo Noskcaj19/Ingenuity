@@ -2,52 +2,46 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.auto;
 
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClawSystem;
+import java.time.LocalTime;
 
-public class MoveArm extends CommandBase {
+public class TurnTable extends CommandBase {
 
-    private ClawSystem clawSystem;
+    ClawSystem clawSystem;
+    private double speed;
     private double setpoint;
-    
 
-    public MoveArm(ClawSystem clawSystem, double setpoint) {
+    public TurnTable(ClawSystem clawSystem, double setpoint, double speed) {
         addRequirements(clawSystem);
-        this.clawSystem = clawSystem;
-        this.setpoint = MathUtil.clamp(setpoint, -580.0, 450.0)
-        ;
+        this.setpoint = setpoint;
+        this.speed = speed;
     }
 
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("Arm started moving");
+        System.out.println("Table started turning");
+
     }
 
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (clawSystem.getArmPosition() != setpoint)
-            clawSystem.moveArm(setpoint);
-
+        clawSystem.spinTable(speed);
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Arm stopped moving");
+        System.out.println("Table stopped turning");
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        // We might want to use clamp to check if the current position is in approximate range
-        // since it might never equal to setpoint exactly
-        if (clawSystem.getArmPosition() == setpoint)
-            return true;
         return false;
     }
 }
