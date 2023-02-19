@@ -6,7 +6,7 @@ package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.Drive;
+import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.ChangeClawStatus.ClawStatus;
 import frc.robot.commands.auto.Turn.Direction;
 import frc.robot.subsystems.ClawSystem;
@@ -27,7 +27,7 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drive = drive;
 
         addCommands(
-                // new Drive(drivetrain, .5, .3),
+                new Drive(drivetrain, .5, .3),
                 // new Turn(drivetrain, .3, 90, Direction.Clockwise),
                 // new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
                 // new MoveArm(clawSystem, 140),
