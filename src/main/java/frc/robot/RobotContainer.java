@@ -7,7 +7,7 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultTurret;
-import frc.robot.commands.Drive;
+import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.DefaultAuto;
 import frc.robot.commands.auto.FinalAuto;
 import frc.robot.subsystems.ClawSystem;

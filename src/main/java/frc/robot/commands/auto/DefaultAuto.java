@@ -1,7 +1,7 @@
 package frc.robot.commands.auto;
 
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.commands.Drive;
+import frc.robot.commands.auto.Drive;
 import frc.robot.subsystems.ClawSystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
