@@ -16,10 +16,6 @@ public class DefaultTurret extends CommandBase {
     private final double TableSpinSpeed = .3;
     private final double armMoveSpeed = .2;
 
-    private double extendController = 0;
-    private double moveController = 0;
-    private double extendSet = 0;
-
     private XboxController primaryController;
     private XboxController secondaryController;
     private ClawSystem clawSystem;
@@ -106,27 +102,28 @@ public class DefaultTurret extends CommandBase {
         // secondarycontroller > 0.1 thing
 
         // our own very special deadband method!!!
+        double extendController;
         if (secondaryController.getRightY() < 0.03 && secondaryController.getRightY() > -0.03) {
             extendController = 0;
         } else {
-            extendController = secondaryController.getRightY();
+            extendController = secondaryController.getRightY() * 2;
         }
 
+        double moveController;
         if (secondaryController.getLeftY() < 0.03 && secondaryController.getLeftY() > -0.03) {
             moveController = 0;
         } else {
-            moveController = secondaryController.getLeftY();
+            moveController = secondaryController.getLeftY() * 10;
         }
 
-        extendSet = -extendController + clawSystem.getExtendSetPoint();
-        // clawSystem.setExtendSetPoint(extendSet);
+        var extendSet = -extendController + -clawSystem.getExtendSetPoint();
+        clawSystem.setExtendSetPoint(extendSet);
 
         clawSystem.spinTable(secondaryController.getLeftX() / 2);
         // setArmSetPoint(secondaryController.getLeftX()*1/50);
         // setArmSetPoint(set);
 
-        var armAdjust = moveController * 10;
-        var armSetpoint = armAdjust + clawSystem.getArmSetPoint();
+        var armSetpoint = -moveController + clawSystem.getArmSetPoint();
         clawSystem.setArmSetPoint(armSetpoint);
 
     }

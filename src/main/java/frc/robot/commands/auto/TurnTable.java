@@ -10,12 +10,13 @@ import java.time.LocalTime;
 
 public class TurnTable extends CommandBase {
 
-    ClawSystem clawSystem;
+    private final ClawSystem clawSystem;
     private double speed;
     private double setpoint;
 
     public TurnTable(ClawSystem clawSystem, double setpoint, double speed) {
         addRequirements(clawSystem);
+        this.clawSystem = clawSystem;
         this.setpoint = setpoint;
         this.speed = speed;
     }
