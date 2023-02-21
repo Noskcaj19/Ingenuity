@@ -27,12 +27,13 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drive = drive;
 
         addCommands(
-                new Drive(drivetrain, .5, .3),
-                // new Turn(drivetrain, .3, 90, Direction.Clockwise),
-                // new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
-                // new MoveArm(clawSystem, 140),
-                // new MoveArm(clawSystem, -140)
-                new ExtendArm(clawSystem, 20).withTimeout(.3) // This might not work because
+                new BalanceAuto(drivetrain, -0.2).withTimeout(.5),
+                new BalanceAutoPartTwo(drivetrain, -0.2)
+        // new Turn(drivetrain, .3, 90, Direction.Clockwise),
+        // new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
+        // new MoveArm(clawSystem, 140),
+        // new MoveArm(clawSystem, -140)
+        // new ExtendArm(clawSystem, 20).withTimeout(.3) // This might not work because
         // idk how to get extend position
         // new MoveArm(clawSystem, .4).withTimeout(.3),
         // new ChangeClawStatus(clawSystem, ClawStatus.OPEN)

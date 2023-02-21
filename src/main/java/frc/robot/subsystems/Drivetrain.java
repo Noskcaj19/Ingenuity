@@ -143,6 +143,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void periodic() {
+        System.out.println(navx.getRoll());
+        System.out.println("Are we climbing?: " + (navx.getRoll() > 10));
+        System.out.println("Are we level?: " + (navx.getRoll() < -2.2));
 
         var wheelPositions = new MecanumDriveWheelPositions(getFLDistance(),
                 getFRDistance(), getRLDistance(), getRRDistance());
@@ -152,6 +155,11 @@ public class Drivetrain extends SubsystemBase {
         odometry.update(gyroAngle, wheelPositions);
 
         m_feild.setRobotPose(odometry.getPoseMeters());
+    }
+
+    // really wished this was in its own subsystem but oh well
+    public double getRoll() {
+        return navx.getRoll();
     }
 
     // public void drive(double x, double y, double z) {
