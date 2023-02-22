@@ -27,8 +27,9 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drive = drive;
 
         addCommands(
-                new BalanceAuto(drivetrain, -0.2).withTimeout(.5),
-                new BalanceAutoPartTwo(drivetrain, -0.2)
+                new BalanceAuto(drivetrain, -0.2),
+                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4)
+        // new Drive(drivetrain, 10, -0.2).withTimeout(2.6)
         // new Turn(drivetrain, .3, 90, Direction.Clockwise),
         // new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
         // new MoveArm(clawSystem, 140),

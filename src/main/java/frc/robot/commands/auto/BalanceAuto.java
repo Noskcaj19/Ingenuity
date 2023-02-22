@@ -32,7 +32,7 @@ public class BalanceAuto extends CommandBase {
   public void execute() {
     // System.out.println(navx.getYaw());
 
-    if (drivetrain.getRoll() > 9) {
+    if (drivetrain.getRoll() > 10.03) {
 
     } else {
       drivetrain.driveMecanum(speed, 0, 0);
@@ -47,7 +47,7 @@ public class BalanceAuto extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (drivetrain.getRoll() > 9) {
+    if (drivetrain.getRoll() > 10.03) {
       return true;
     } else {
       return false;
