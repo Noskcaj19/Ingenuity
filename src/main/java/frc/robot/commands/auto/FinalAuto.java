@@ -26,23 +26,37 @@ public class FinalAuto extends SequentialCommandGroup {
         this.clawSystem = clawSystem;
         this.drive = drive;
 
-        addCommands(
-                new BalanceAuto(drivetrain, -0.2),
-                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4)
-        // new Drive(drivetrain, 10, -0.2).withTimeout(2.6)
-        // new Turn(drivetrain, .3, 90, Direction.Clockwise),
-        // new Turn(drivetrain, .3, 90, Direction.CounterClockwise),
-        // new MoveArm(clawSystem, 140),
-        // new MoveArm(clawSystem, -140)
-        // new ExtendArm(clawSystem, 20).withTimeout(.3) // This might not work because
-        // idk how to get extend position
-        // new MoveArm(clawSystem, .4).withTimeout(.3),
-        // new ChangeClawStatus(clawSystem, ClawStatus.OPEN)
-        // new TurnTable(clawSystem, 0, .4).withTimeout(.5),
-        // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE)
-        );
-        // SOME COMMANDS NEVER STOP WITHOUT TIMEOUT METHOD! DONT REMOVE IT!!!
-        // WE NEED TO ADD SETPOINT TO TURNTABLE LATER
+        int mode = 3;
+
+        if (mode == 1) {
+            // Mode 1 for going to another cone after
+            addCommands(
+                    // comment for other people
+                    new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                    new MoveArm(clawSystem, 440),
+                    new Drive(drivetrain, .5, .5),
+                    new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+                    new Drive(drivetrain, -10, 1000.00000000000000000001),
+                    new Turn(drivetrain, .5, 180, Direction.CounterClockwise));
+        } else if (mode == 2) {
+            // Mode 2 for going to charging station after
+            addCommands(
+                    new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                    new MoveArm(clawSystem, 440),
+                    new Drive(drivetrain, .5, .5),
+                    new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+                    new Drive(drivetrain, -0.5, 1000.00000000000000000001),
+                    new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
+                    new Drive(drivetrain, 0.5, 1000.00000000000000000001),
+                    new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
+                    new BalanceAuto(drivetrain, -0.2),
+                    new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4));
+        } else {
+            // something else
+            addCommands(
+            // Use it for testing
+            );
+        }
 
     }
 
