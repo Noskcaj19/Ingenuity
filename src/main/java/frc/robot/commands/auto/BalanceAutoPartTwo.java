@@ -17,9 +17,10 @@ public class BalanceAutoPartTwo extends CommandBase {
   /** Creates a new BalanceAuto. */
   public BalanceAutoPartTwo(Drivetrain drivetrain, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-
+    addRequirements(drivetrain);
     this.drivetrain = drivetrain;
     this.speed = speed;
+    
   }
 
   // Called when the command is initially scheduled.
