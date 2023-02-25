@@ -80,8 +80,8 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void setArmSetPoint(double setpoint) {
-		armPID.setSetpoint(MathUtil.clamp(setpoint, -580.0, 450.0));
-
+		armPID.setSetpoint(MathUtil.clamp(setpoint, -50, 1182.0));
+		// armPID.setSetpoint(setpoint);
 	}
 
 	public void openClaw() {

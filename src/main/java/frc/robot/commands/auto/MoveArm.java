@@ -16,7 +16,8 @@ public class MoveArm extends CommandBase {
     public MoveArm(ClawSystem clawSystem, double setpoint) {
         addRequirements(clawSystem);
         this.clawSystem = clawSystem;
-        this.setpoint = MathUtil.clamp(setpoint, -580.0, 450.0);
+        this.setpoint = MathUtil.clamp(setpoint, -50, 1182);
+
     }
 
     // Called when the command is initially scheduled.

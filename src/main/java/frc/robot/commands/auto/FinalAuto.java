@@ -26,18 +26,19 @@ public class FinalAuto extends SequentialCommandGroup {
         this.clawSystem = clawSystem;
         this.drive = drive;
 
-        int mode = 3;
+        int mode = 1;
 
         if (mode == 1) {
             // Mode 1 for going to another cone after
             addCommands(
                     // comment for other people
-                    new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                    new MoveArm(clawSystem, 440),
-                    new Drive(drivetrain, .5, .5),
-                    new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
-                    new Drive(drivetrain, -10, 1000.00000000000000000001),
-                    new Turn(drivetrain, .5, 180, Direction.CounterClockwise));
+                    // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                    // new MoveArm(clawSystem, 440),
+                    // new Drive(drivetrain, 0.5969, .2),
+                    // new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+                    // new Drive(drivetrain, 0.5969, .2),
+                    // new Turn(drivetrain, .5, 180, Direction.CounterClockwise));
+                    new Drive(drivetrain, 0.54, -0.3));
         } else if (mode == 2) {
             // Mode 2 for going to charging station after
             addCommands(
@@ -45,9 +46,9 @@ public class FinalAuto extends SequentialCommandGroup {
                     new MoveArm(clawSystem, 440),
                     new Drive(drivetrain, .5, .5),
                     new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
-                    new Drive(drivetrain, -0.5, 1000.00000000000000000001),
+                    new Drive(drivetrain, -0.5, 1),
                     new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
-                    new Drive(drivetrain, 0.5, 1000.00000000000000000001),
+                    new Drive(drivetrain, 0.5, 1),
                     new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
                     new BalanceAuto(drivetrain, -0.2),
                     new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4));
