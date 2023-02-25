@@ -72,7 +72,7 @@ public class Drivetrain extends SubsystemBase {
 
         odometry = new MecanumDriveOdometry(kinematics, navx.getRotation2d(),
                 new MecanumDriveWheelPositions(getFLDistance(), getFRDistance(), getRLDistance(), getRRDistance()),
-                new Pose2d(5.0, 0.5, new Rotation2d()));
+                new Pose2d(2.0, 3.03, new Rotation2d()));
         rightRear.setInverted(true);
         rightFront.setInverted(true);
 

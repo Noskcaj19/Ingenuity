@@ -38,7 +38,8 @@ public class FinalAuto extends SequentialCommandGroup {
                     // new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
                     // new Drive(drivetrain, 0.5969, .2),
                     // new Turn(drivetrain, .5, 180, Direction.CounterClockwise));
-                    new Drive(drivetrain, 0.54, -0.3));
+                    new BalanceAuto(drivetrain, -0.3),
+                    new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
         } else if (mode == 2) {
             // Mode 2 for going to charging station after
             addCommands(
