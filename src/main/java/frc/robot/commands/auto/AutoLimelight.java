@@ -55,7 +55,6 @@ public class AutoLimelight extends CommandBase{
             double distancePidOut = MathUtil.clamp(distancePid.calculate(distance),
                     -.4 * Constants.kMaxSpeed,
                     .4 * Constants.kMaxSpeed);
-            System.out.println(distancePidOut);
             drivetrain.driveMecanum(-(distancePidOut), -rotOut, 0);
 
 

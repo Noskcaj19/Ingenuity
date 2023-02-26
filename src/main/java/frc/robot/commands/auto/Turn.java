@@ -30,7 +30,6 @@ public class Turn extends CommandBase {
     @Override
     public void initialize() {
         drivetrain.zeroSensors();
-        System.out.println("Initalize turn");
 
     }
 

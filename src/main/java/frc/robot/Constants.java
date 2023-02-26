@@ -22,8 +22,9 @@ public final class Constants {
     public static class OperatorConstants {
         public static final int kDriverControllerPort = 0;
     }
+
     public static final class LimelightConstants {
-        //measurements in inches
+        // measurements in inches
         public static final int kPortHeight = 24;
         public static final int kLimelightHeight = 28;
         public static final int kLimelightAngle = 0;
@@ -32,7 +33,6 @@ public final class Constants {
 
     public static final class DriveConstants {
         public static final double kMaxAngularSpeed = 2 * Math.PI; // One rotation per second
-
 
         public static final double kGearRatio = 10.71;
         // Meters (6 inch/2)
