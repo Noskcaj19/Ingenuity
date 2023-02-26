@@ -24,7 +24,6 @@ public class TurnTable extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-        System.out.println("Table started turning");
 
     }
 
@@ -37,7 +36,7 @@ public class TurnTable extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        System.out.println("Table stopped turning");
+
     }
 
     // Returns true when the command should end.

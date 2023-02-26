@@ -21,7 +21,6 @@ public class Drive extends CommandBase {
     @Override
     public void initialize() {
         drivetrain.zeroSensors();
-        System.out.println("Initalize drive");
     }
 
     public double setDistance(double distance) {
