@@ -123,7 +123,7 @@ public class DefaultTurret extends CommandBase {
         // setArmSetPoint(secondaryController.getLeftX()*1/50);
         // setArmSetPoint(set);
 
-        var armSetpoint = -moveController + clawSystem.getArmSetPoint();
+        var armSetpoint = moveController + clawSystem.getArmSetPoint();
         clawSystem.setArmSetPoint(armSetpoint);
 
     }

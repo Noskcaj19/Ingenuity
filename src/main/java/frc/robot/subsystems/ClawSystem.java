@@ -33,7 +33,7 @@ public class ClawSystem extends SubsystemBase {
 	/** Creates a new ClawSystem. */
 	public ClawSystem(PneumaticsControlModule pCM) {
 		this.pCM = pCM;
-		armSolenoid = pCM.makeDoubleSolenoid(6, 7);
+		armSolenoid = pCM.makeDoubleSolenoid(4, 5);
 		// armSolenoid.set(Value.kForward);
 		Shuffleboard.getTab("Debug").add(armPID);
 		Shuffleboard.getTab("Debug").add(extendPID);
@@ -76,11 +76,11 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void setExtendSetPoint(double setpoint) {
-		extendPID.setSetpoint(-MathUtil.clamp(setpoint, 0, 40));
+		extendPID.setSetpoint(-MathUtil.clamp(setpoint, 0, 45));
 	}
 
 	public void setArmSetPoint(double setpoint) {
-		armPID.setSetpoint(MathUtil.clamp(setpoint, -50, 1182.0));
+		armPID.setSetpoint(MathUtil.clamp(setpoint, -1182, 10));
 		// armPID.setSetpoint(setpoint);
 	}
 

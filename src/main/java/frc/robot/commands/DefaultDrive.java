@@ -31,7 +31,7 @@ public class DefaultDrive extends CommandBase {
     public void execute() {
         drivetrain.driveFieldOriented(
                 -primaryController.getLeftY() * .6,
-                primaryController.getLeftX() * .6,
+                primaryController.getLeftX() * 0,
                 primaryController.getRightX() * .6);
         if (primaryController.getStartButton()) {
             drivetrain.zero();
