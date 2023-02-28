@@ -21,16 +21,17 @@ public class AutoLimelight extends CommandBase{
     private final PIDController distancePid;
     boolean turnOff = false;
     private Limelight limelight;
-    private XboxController primaryController;
+    private XboxController secondaryController;
     private Drivetrain drivetrain;
 
 
-    public AutoLimelight(ClawSystem clawSystem, XboxController primaryController, Limelight limelight, boolean turnOff, Drivetrain drivetrain){
+
+    public AutoLimelight(ClawSystem clawSystem, XboxController secondaryController, Limelight limelight, boolean turnOff, Drivetrain drivetrain){
         addRequirements(clawSystem);
         this.clawSystem = clawSystem;
         this.limelight = limelight;
         this.turnOff = turnOff;
-        this.primaryController = primaryController;
+        this.secondaryController = secondaryController;
         turnPid = new PIDController(0.0525, 0.009, 0.0001);
         turnPid.setSetpoint(0);
         distancePid = new PIDController(0.0225, 0.0, 0.0001);
@@ -55,6 +56,7 @@ public class AutoLimelight extends CommandBase{
             double distancePidOut = MathUtil.clamp(distancePid.calculate(distance),
                     -.4 * Constants.kMaxSpeed,
                     .4 * Constants.kMaxSpeed);
+            System.out.println(distancePidOut);
             drivetrain.driveMecanum(-(distancePidOut), -rotOut, 0);
 
 

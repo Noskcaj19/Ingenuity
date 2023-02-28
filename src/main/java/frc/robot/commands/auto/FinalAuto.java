@@ -4,13 +4,20 @@
 
 package frc.robot.commands.auto;
 
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardLayout;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.util.sendable.*;
 import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.ChangeClawStatus.ClawStatus;
 import frc.robot.commands.auto.Turn.Direction;
 import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
+
 
 public class FinalAuto extends SequentialCommandGroup {
     /** Creates a new FinalAuto. */
@@ -25,10 +32,10 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drivetrain = drivetrain;
         this.clawSystem = clawSystem;
         this.drive = drive;
+    }
 
-        int mode = 1;
 
-        if (mode == 1) {
+    public void mode1(){
             // Mode 1 for going to another cone after
             addCommands(
                     // comment for other people
@@ -40,7 +47,9 @@ public class FinalAuto extends SequentialCommandGroup {
                     // new Turn(drivetrain, .5, 180, Direction.CounterClockwise));
                     new BalanceAuto(drivetrain, -0.3),
                     new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
-        } else if (mode == 2) {
+    }
+        
+    public void mode2(){
             // Mode 2 for going to charging station after
             addCommands(
                     new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
@@ -53,13 +62,14 @@ public class FinalAuto extends SequentialCommandGroup {
                     new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
                     new BalanceAuto(drivetrain, -0.2),
                     new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4));
-        } else {
+    }
+    
+   /*     } else {
             // something else
             addCommands(
             // Use it for testing
             );
-        }
+        }      */
 
     }
 
-}

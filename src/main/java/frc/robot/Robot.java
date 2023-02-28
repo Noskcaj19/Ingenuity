@@ -19,6 +19,10 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.auto.FinalAuto;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -34,6 +38,13 @@ public class Robot extends TimedRobot {
 
     private RobotContainer m_robotContainer;
 
+    private static final String kDefaultAuto = "Default";
+    private static final String kCustomAuto = "Mode 1";
+    private static final String kCustomAuto2 = "Mode 2";
+    private String m_autoselected;
+    private final SendableChooser<String> m_chooser = new SendableChooser<>();
+    FinalAuto autonomousCommand = m_robotContainer.getAutonomousCommand();
+
     /**
      * This function is run when the robot is first started up and should be used
      * for any
@@ -45,18 +56,26 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
-        CameraServer.startAutomaticCapture(0);
-
         // Object m_trajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(0,0, Rotation2d.fromDegrees(0.0)),
         // List.of(new Translation2d(1,1), new Translation2d(2, -1)),
         // new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
         // new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters((3.0)));
 
-        Field2d m_feild = new Field2d();
-        SmartDashboard.putData(m_feild);
+        Field2d m_field = new Field2d();
+        SmartDashboard.putData(m_field);
 
-        // m_feild.getObject("traj").setTrajectory(m_trajectory);
+        CameraServer.startAutomaticCapture(0);
+        m_chooser.setDefaultOption("def", kDefaultAuto);
+        m_chooser.addOption("mode1", kCustomAuto);
+        m_chooser.addOption("mode2", kCustomAuto2);
+        SmartDashboard.putData("Auto choices", m_chooser);
+
+        
+
+        
+
+        // m_field.getObject("traj").setTrajectory(m_trajectory);
 
     }
 
@@ -97,7 +116,9 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_autoselected = m_chooser.getSelected();
+        // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
+        // System.out.println("Auto selected: " + m_autoSelected);
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
@@ -108,6 +129,19 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
+        switch (m_autoselected) {
+            case kCustomAuto:
+                autonomousCommand.mode1();
+                break;
+            case kCustomAuto2:
+                autonomousCommand.mode2();
+                break;
+            case kDefaultAuto:
+            default:
+              break;
+        }
+
+
     }
 
     @Override
