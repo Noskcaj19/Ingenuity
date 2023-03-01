@@ -32,13 +32,15 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drivetrain = drivetrain;
         this.clawSystem = clawSystem;
         this.drive = drive;
-        int mode = 1;
+        //int mode = 1;
+    }
 
-        // public void mode1() {
-        if (mode == 1)
+        public void mode1() {
+        //if (mode == 1)
 
-        {
+        //{
             // Mode 1 for going to another cone after
+            System.out.println("Mode 1 starts");
             addCommands(
                     // comment for other people
                     new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
@@ -49,7 +51,10 @@ public class FinalAuto extends SequentialCommandGroup {
                     new Turn(drivetrain, .5, 180, Direction.CounterClockwise),
                     new BalanceAuto(drivetrain, -0.3),
                     new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
-        } else if (mode == 2) {
+        }
+        //} else if (mode == 2) {
+
+        public void mode2() {
 
             // Mode 2 for going to charging station after
             addCommands(
@@ -67,4 +72,3 @@ public class FinalAuto extends SequentialCommandGroup {
         }
 
     }
-}

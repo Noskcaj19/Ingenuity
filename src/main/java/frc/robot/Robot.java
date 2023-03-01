@@ -43,7 +43,8 @@ public class Robot extends TimedRobot {
     private static final String kCustomAuto2 = "Mode 2";
     private String m_autoselected;
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    Command autonomousCommand = m_robotContainer.getAutonomousCommand();
+    Command autonomousCommand;
+    
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -56,6 +57,7 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
+        Command autonomousCommand = m_robotContainer.getAutonomousCommand();
         // Object m_trajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(0,0, Rotation2d.fromDegrees(0.0)),
         // List.of(new Translation2d(1,1), new Translation2d(2, -1)),
@@ -117,6 +119,19 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
+            if(!m_autonomousCommand.isFinished()){
+                switch (m_autoselected) {
+                    case kCustomAuto:
+                        ((FinalAuto) autonomousCommand).mode1();
+                        break;
+                    case kCustomAuto2:
+                        ((FinalAuto) autonomousCommand).mode2();
+                        break;
+                    case kDefaultAuto:
+                    default:
+                        break;
+                }
+            }
             m_autonomousCommand.schedule();
         }
     }
@@ -124,17 +139,18 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        // switch (m_autoselected) {
-        // case kCustomAuto:
-        // ((FinalAuto)autonomousCommand).mode1();
-        // break;
-        // case kCustomAuto2:
-        // ((FinalAuto) autonomousCommand).mode2();
-        // break;
-        // case kDefaultAuto:
-        // default:
-        // break;
-        // }
+        /* switch (m_autoselected) {
+            case kCustomAuto:
+                ((FinalAuto)autonomousCommand).mode1();
+                break;
+            case kCustomAuto2:
+                ((FinalAuto) autonomousCommand).mode2();
+                break;
+            case kDefaultAuto:
+            default:
+                break;
+        } */
+
 
     }
 
