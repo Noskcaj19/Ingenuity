@@ -91,7 +91,7 @@ public class RobotContainer {
      *
      * @return the command to run in autonomous
      */
-    public FinalAuto getAutonomousCommand() {
+    public Command getAutonomousCommand() {
         // An example command will be run in autonomous
         // write auto code once we get full robot
         return new FinalAuto(drive, drivetrain, clawSystem);
