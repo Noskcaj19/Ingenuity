@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         m_robotContainer = new RobotContainer();
-        Command autonomousCommand = m_robotContainer.getAutonomousCommand();
+        this.autonomousCommand = m_robotContainer.getAutonomousCommand();
         // Object m_trajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(0,0, Rotation2d.fromDegrees(0.0)),
         // List.of(new Translation2d(1,1), new Translation2d(2, -1)),
@@ -67,11 +67,12 @@ public class Robot extends TimedRobot {
         Field2d m_field = new Field2d();
         SmartDashboard.putData(m_field);
 
-        CameraServer.startAutomaticCapture(0);
+        // CameraServer.startAutomaticCapture(0);
         m_chooser.setDefaultOption("def", kDefaultAuto);
         m_chooser.addOption("mode1", kCustomAuto);
         m_chooser.addOption("mode2", kCustomAuto2);
         SmartDashboard.putData("Auto choices", m_chooser);
+
         // m_field.getObject("traj").setTrajectory(m_trajectory);
 
     }
@@ -116,16 +117,17 @@ public class Robot extends TimedRobot {
         m_autoselected = m_chooser.getSelected();
         // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
         // System.out.println("Auto selected: " + m_autoSelected);
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             if(!m_autonomousCommand.isFinished()){
                 switch (m_autoselected) {
                     case kCustomAuto:
-                        ((FinalAuto) autonomousCommand).mode1();
+                        ((FinalAuto) this.autonomousCommand).mode1();
                         break;
                     case kCustomAuto2:
-                        ((FinalAuto) autonomousCommand).mode2();
+                        ((FinalAuto) this.autonomousCommand).mode2();
                         break;
                     case kDefaultAuto:
                     default:
@@ -139,18 +141,6 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        /* switch (m_autoselected) {
-            case kCustomAuto:
-                ((FinalAuto)autonomousCommand).mode1();
-                break;
-            case kCustomAuto2:
-                ((FinalAuto) autonomousCommand).mode2();
-                break;
-            case kDefaultAuto:
-            default:
-                break;
-        } */
-
 
     }
 
