@@ -124,18 +124,17 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        switch (m_autoselected) {
-            case kCustomAuto:
-                ((FinalAuto)autonomousCommand).mode1();
-                break;
-            case kCustomAuto2:
-                ((FinalAuto) autonomousCommand).mode2();
-                break;
-            case kDefaultAuto:
-            default:
-                break;
-        }
-
+        // switch (m_autoselected) {
+        // case kCustomAuto:
+        // ((FinalAuto)autonomousCommand).mode1();
+        // break;
+        // case kCustomAuto2:
+        // ((FinalAuto) autonomousCommand).mode2();
+        // break;
+        // case kDefaultAuto:
+        // default:
+        // break;
+        // }
 
     }
 
