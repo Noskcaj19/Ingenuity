@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
     private String m_autoselected;
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
     Command autonomousCommand;
-    
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -69,8 +68,8 @@ public class Robot extends TimedRobot {
 
         // CameraServer.startAutomaticCapture(0);
         m_chooser.setDefaultOption("def", kDefaultAuto);
-        m_chooser.addOption("mode1", kCustomAuto);
-        m_chooser.addOption("mode2", kCustomAuto2);
+        m_chooser.addOption("edge_HighGoal", kCustomAuto);
+        m_chooser.addOption("ChargeStation_MidGoal", kCustomAuto2);
         SmartDashboard.putData("Auto choices", m_chooser);
 
         // m_field.getObject("traj").setTrajectory(m_trajectory);
@@ -121,20 +120,23 @@ public class Robot extends TimedRobot {
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
-            if(!m_autonomousCommand.isFinished()){
+            if (autonomousCommand.isFinished() == false) {
                 switch (m_autoselected) {
                     case kCustomAuto:
-                        ((FinalAuto) this.autonomousCommand).mode1();
+                        ((FinalAuto) autonomousCommand).edgeHighGoal();
+                        autonomousCommand.schedule();
                         break;
                     case kCustomAuto2:
-                        ((FinalAuto) this.autonomousCommand).mode2();
+                        ((FinalAuto) autonomousCommand).ChargeStationMidGoal();
+                        autonomousCommand.schedule();
                         break;
                     case kDefaultAuto:
                     default:
                         break;
+
                 }
             }
-            m_autonomousCommand.schedule();
+
         }
     }
 
