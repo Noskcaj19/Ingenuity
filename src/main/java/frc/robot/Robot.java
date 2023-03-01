@@ -43,7 +43,7 @@ public class Robot extends TimedRobot {
     private static final String kCustomAuto2 = "Mode 2";
     private String m_autoselected;
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    Command autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // FinalAuto autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -70,6 +70,7 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("mode1", kCustomAuto);
         m_chooser.addOption("mode2", kCustomAuto2);
         SmartDashboard.putData("Auto choices", m_chooser);
+
         // m_field.getObject("traj").setTrajectory(m_trajectory);
 
     }
@@ -124,18 +125,17 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        switch (m_autoselected) {
-            case kCustomAuto:
-                ((FinalAuto)autonomousCommand).mode1();
-                break;
-            case kCustomAuto2:
-                ((FinalAuto) autonomousCommand).mode2();
-                break;
-            case kDefaultAuto:
-            default:
-                break;
-        }
-
+        // switch (m_autoselected) {
+        // case kCustomAuto:
+        // autonomousCommand.mode1();
+        // break;
+        // case kCustomAuto2:
+        // autonomousCommand.mode2();
+        // break;
+        // case kDefaultAuto:
+        // default:
+        // break;
+        // }
 
     }
 
