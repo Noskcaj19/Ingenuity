@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.util.sendable.*;
 import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.ChangeClawStatus.ClawStatus;
@@ -31,18 +32,56 @@ public class FinalAuto extends SequentialCommandGroup {
         this.drivetrain = drivetrain;
         this.clawSystem = clawSystem;
         this.drive = drive;
+
+        addCommands(
+                // comment for other people
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                new MoveArm(clawSystem, -519),
+                new ExtendArm(clawSystem, 5),
+                new ExtendArm(clawSystem, 0),
+                new Drive(drivetrain, 1, -0.2).withTimeout(0.7),
+                new ExtendArm(clawSystem, 48),
+                new WaitCommand(0.5),
+                new MoveArm(clawSystem, -1250),
+                new Drive(drivetrain, 1, 0.2).withTimeout(0.7),
+                new WaitCommand(1),
+                new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+                new WaitCommand(0.5),
+                new ExtendArm(clawSystem, 0),
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                new BalanceAuto(drivetrain, -0.1).withTimeout(3),
+                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
+
     }
+
+    // code for going for mid goal
+    // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+    // new MoveArm(clawSystem, -219),
+    // new ExtendArm(clawSystem, 5),
+    // new ExtendArm(clawSystem, 0),
+    // new MoveArm(clawSystem, -1095),
+    // new ExtendArm(clawSystem, 20),
+    // new WaitCommand(1),
+    // new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+    // new WaitCommand(0.5),
+    // new ExtendArm(clawSystem, 0),
+    // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+    // new BalanceAuto(drivetrain, -0.1).withTimeout(3),
+    // new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
 
     public void mode1() {
         // Mode 1 for going to another cone after
         addCommands(
                 // comment for other people
                 new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                new MoveArm(clawSystem, 440),
-                new Drive(drivetrain, 0.5969, .2),
+                new MoveArm(clawSystem, -219),
+                new ExtendArm(clawSystem, 5),
+                new ExtendArm(clawSystem, 0),
+                new MoveArm(clawSystem, -1095),
+                new ExtendArm(clawSystem, 20),
                 new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
-                new Drive(drivetrain, 0.5969, .2),
-                new Turn(drivetrain, .5, 180, Direction.CounterClockwise),
+                new ExtendArm(clawSystem, 0),
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
                 new BalanceAuto(drivetrain, -0.3),
                 new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2));
     }
@@ -51,15 +90,15 @@ public class FinalAuto extends SequentialCommandGroup {
         // Mode 2 for going to charging station after
         addCommands(
                 new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                new MoveArm(clawSystem, 440),
-                new Drive(drivetrain, 0.5969, .2),
+                new MoveArm(clawSystem, -219),
+                new ExtendArm(clawSystem, 5),
+                new ExtendArm(clawSystem, 0),
+                new MoveArm(clawSystem, -1095),
+                new ExtendArm(clawSystem, 20),
                 new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
-                new Drive(drivetrain, -0.5, 1),
-                new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
-                new Drive(drivetrain, 0.5, 1),
-                new Turn(drivetrain, .5, 90, Direction.CounterClockwise),
-                new BalanceAuto(drivetrain, -0.2),
-                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(0.4));
+                new ExtendArm(clawSystem, 0),
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                new Drive(drivetrain, .5, 0.2));
 
     }
 

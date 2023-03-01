@@ -43,7 +43,8 @@ public class Robot extends TimedRobot {
     private static final String kCustomAuto2 = "Mode 2";
     private String m_autoselected;
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
-    // FinalAuto autonomousCommand = m_robotContainer.getAutonomousCommand();
+    // FinalAuto autonomousCommand = (FinalAuto)
+    // m_robotContainer.getAutonomousCommand();
 
     /**
      * This function is run when the robot is first started up and should be used
@@ -65,7 +66,7 @@ public class Robot extends TimedRobot {
         Field2d m_field = new Field2d();
         SmartDashboard.putData(m_field);
 
-        CameraServer.startAutomaticCapture(0);
+        // CameraServer.startAutomaticCapture(0);
         m_chooser.setDefaultOption("def", kDefaultAuto);
         m_chooser.addOption("mode1", kCustomAuto);
         m_chooser.addOption("mode2", kCustomAuto2);
@@ -112,9 +113,10 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autoselected = m_chooser.getSelected();
+        // m_autoselected = m_chooser.getSelected();
         // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
         // System.out.println("Auto selected: " + m_autoSelected);
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
@@ -125,17 +127,7 @@ public class Robot extends TimedRobot {
     /** This function is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {
-        // switch (m_autoselected) {
-        // case kCustomAuto:
         // autonomousCommand.mode1();
-        // break;
-        // case kCustomAuto2:
-        // autonomousCommand.mode2();
-        // break;
-        // case kDefaultAuto:
-        // default:
-        // break;
-        // }
 
     }
 
