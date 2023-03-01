@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSystem extends SubsystemBase {
-	private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushless);
+	private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
 	private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushed);
 	private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
 	private CANSparkMax roller = new CANSparkMax(30, MotorType.kBrushed);
@@ -62,7 +62,7 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void spinTable(double speed) {
-		turnTable.set(-speed);
+		turnTable.set(speed);
 	}
 
 	public double getExtendSetPoint() {
@@ -76,7 +76,7 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void setExtendSetPoint(double setpoint) {
-		extendPID.setSetpoint(-MathUtil.clamp(setpoint, 0, 45));
+		extendPID.setSetpoint(-MathUtil.clamp(setpoint, 0, 48));
 	}
 
 	public void setArmSetPoint(double setpoint) {
