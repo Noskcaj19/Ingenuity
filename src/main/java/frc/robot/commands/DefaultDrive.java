@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.commands.auto.BalanceAuto;
@@ -13,7 +14,13 @@ public class DefaultDrive extends CommandBase {
     private XboxController primaryController;
     private Drivetrain drivetrain;
     private BalanceAuto balanceAuto;
+    SlewRateLimiter filter = new SlewRateLimiter(0.5);
+    SlewRateLimiter filterTurn = new SlewRateLimiter(1);
+
     // pretend that there is a second controller
+
+    private final SlewRateLimiter speedLimiter = new SlewRateLimiter(3);
+    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(3);
 
     public DefaultDrive(Drivetrain drivetrain, XboxController primaryController) {
         addRequirements(drivetrain);
@@ -29,10 +36,13 @@ public class DefaultDrive extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        drivetrain.driveFieldOriented(
-                -primaryController.getLeftY() * .4,
+
+        final double xSpeed = speedLimiter.calculate(-primaryController.getLeftY());
+        final double rot = rotLimiter.calculate(primaryController.getRightX());
+        drivetrain.driveMecanum(
+                xSpeed,
                 primaryController.getLeftX() * 0,
-                primaryController.getRightX() * .4);
+                rot);
         if (primaryController.getStartButton()) {
             drivetrain.zero();
         }
