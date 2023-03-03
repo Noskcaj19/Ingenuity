@@ -41,13 +41,6 @@ public class DefaultTurret extends CommandBase {
     @Override
     public void execute() {
 
-        // code for turntable
-        if (primaryController.getRightBumper()) {
-            clawSystem.spinTable(TableSpinSpeed);
-        } else if (primaryController.getLeftBumper()) {
-            clawSystem.spinTable(-TableSpinSpeed);
-        }
-
         // code for extending arm
         if (primaryController.getAButton()) {
             clawSystem.setExtendSetPoint(armExtendSpeed);
@@ -62,6 +55,14 @@ public class DefaultTurret extends CommandBase {
         if (secondaryController.getBButtonPressed()) {
             clawSystem.closeClaw();
         }
+
+        // old code for the turntable
+        // clawSystem.spinTable(secondaryController.getLeftX() / 2);
+        // setArmSetPoint(secondaryController.getLeftX()*1/50);
+        // setArmSetPoint(set);
+
+        // new TT code
+        clawSystem.spinTablePID(secondaryController.getLeftX());
 
         // code for turning the roller on and off :3
         if (secondaryController.getXButtonPressed()) {
@@ -118,10 +119,6 @@ public class DefaultTurret extends CommandBase {
 
         var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         clawSystem.setExtendSetPoint(extendSet);
-
-        clawSystem.spinTable(secondaryController.getLeftX() / 2);
-        // setArmSetPoint(secondaryController.getLeftX()*1/50);
-        // setArmSetPoint(set);
 
         var armSetpoint = moveController + clawSystem.getArmSetPoint();
         clawSystem.setArmSetPoint(armSetpoint);

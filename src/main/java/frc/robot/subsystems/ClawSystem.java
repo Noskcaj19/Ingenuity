@@ -24,11 +24,13 @@ public class ClawSystem extends SubsystemBase {
 	private PneumaticsControlModule pCM;
 	private final DoubleSolenoid armSolenoid;
 	private final Encoder arm2 = new Encoder(0, 1);
+	private final Encoder turnCoder = new Encoder(2, 3);
 
 	// p 0.5
 	// good values for position controll p 0.4 i 0 d 0.002
 	private final PIDController armPID = new PIDController(0.05, 0, 0.001);
 	private final PIDController extendPID = new PIDController(0.2, 0, 0.001);
+	private final PIDController turnPID = new PIDController(0, 0, 0);
 
 	/** Creates a new ClawSystem. */
 	public ClawSystem(PneumaticsControlModule pCM) {
@@ -63,6 +65,10 @@ public class ClawSystem extends SubsystemBase {
 
 	public void spinTable(double speed) {
 		turnTable.set(speed);
+	}
+
+	public void spinTablePID(double setpoint) {
+		turnTable.set(turnPID.calculate(turnCoder.getDistance(), setpoint));
 	}
 
 	public double getExtendSetPoint() {
