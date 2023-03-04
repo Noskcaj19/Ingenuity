@@ -46,8 +46,8 @@ public class ClawSystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		// System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
-		// arm2.getDistance());
+		System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
+				arm2.getDistance());
 		// This method will be called once per scheduler run
 
 		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
@@ -79,6 +79,10 @@ public class ClawSystem extends SubsystemBase {
 	public double getArmSetPoint() {
 
 		return armPID.getSetpoint();
+	}
+
+	public void setGrabPoint() {
+		armPID.setSetpoint(-1014.45);
 	}
 
 	public void setExtendSetPoint(double setpoint) {

@@ -132,6 +132,7 @@ public class Robot extends TimedRobot {
                         break;
                     case kDefaultAuto:
                     default:
+                        ((FinalAuto) autonomousCommand).testAuto();
                         break;
 
                 }

@@ -143,9 +143,9 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void periodic() {
-        // System.out.println(navx.getRoll());
-        // System.out.println("Are we climbing?: " + (navx.getRoll() > 10));
-        // System.out.println("Are we level?: " + (navx.getRoll() < 0.4));
+        System.out.println(navx.getRoll());
+        System.out.println("Are we climbing?: " + (navx.getRoll() > 10));
+        System.out.println("Are we level?: " + (navx.getRoll() < 0.4));
         // System.out.println("Front Left distance: " + getFLDistance());
         // System.out.println("Front Right distance: " + getFRDistance());
 

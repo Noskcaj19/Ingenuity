@@ -19,7 +19,7 @@ public class DefaultDrive extends CommandBase {
 
     // pretend that there is a second controller
 
-    private final SlewRateLimiter speedLimiter = new SlewRateLimiter(3);
+    private final SlewRateLimiter speedLimiter = new SlewRateLimiter(5);
     private final SlewRateLimiter rotLimiter = new SlewRateLimiter(3);
 
     public DefaultDrive(Drivetrain drivetrain, XboxController primaryController) {

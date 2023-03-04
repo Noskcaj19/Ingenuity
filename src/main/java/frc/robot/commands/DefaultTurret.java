@@ -57,12 +57,12 @@ public class DefaultTurret extends CommandBase {
         }
 
         // old code for the turntable
-        // clawSystem.spinTable(secondaryController.getLeftX() / 2);
+        clawSystem.spinTable(secondaryController.getLeftX() / 2);
         // setArmSetPoint(secondaryController.getLeftX()*1/50);
         // setArmSetPoint(set);
 
-        // new TT code
-        clawSystem.spinTablePID(secondaryController.getLeftX());
+        // evil TT code
+        // clawSystem.spinTablePID(secondaryController.getLeftX());
 
         // code for turning the roller on and off :3
         if (secondaryController.getXButtonPressed()) {
@@ -116,6 +116,10 @@ public class DefaultTurret extends CommandBase {
         } else {
             moveController = secondaryController.getLeftY() * 10;
         }
+
+        // while (secondaryController.getXButton()) {
+        // clawSystem.setGrabPoint();
+        // }
 
         var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         clawSystem.setExtendSetPoint(extendSet);
