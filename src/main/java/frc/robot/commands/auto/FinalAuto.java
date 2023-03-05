@@ -82,8 +82,7 @@ public class FinalAuto extends SequentialCommandGroup {
                 new WaitCommand(0.5),
                 new ExtendArm(clawSystem, 0),
                 new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                new BalanceAuto(drivetrain, -0.1).withTimeout(3),
-                new BalanceAutoPartTwo(drivetrain, -0.4).withTimeout(6));
+                new BalanceAuto(drivetrain, -0.35).withTimeout(6));
 
         /*
          * addCommands(
@@ -121,7 +120,7 @@ public class FinalAuto extends SequentialCommandGroup {
                 new ExtendArm(clawSystem, 0),
                 new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
                 new BalanceAuto(drivetrain, -0.4).withTimeout(6),
-                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2.2));
+                new BalanceAutoPartTwo(drivetrain, -0.2).withTimeout(2.3));
     }
 
 }

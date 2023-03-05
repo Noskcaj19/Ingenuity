@@ -117,9 +117,9 @@ public class DefaultTurret extends CommandBase {
             moveController = secondaryController.getLeftY() * 10;
         }
 
-        // while (secondaryController.getXButton()) {
-        // clawSystem.setGrabPoint();
-        // }
+        if (secondaryController.getXButton()) {
+            clawSystem.setGrabPoint();
+        }
 
         var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         clawSystem.setExtendSetPoint(extendSet);
