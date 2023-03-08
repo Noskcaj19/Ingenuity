@@ -1,4 +1,4 @@
-package frc.robot.commands.auto;
+package frc.robot.commands.limelight;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import frc.robot.Constants;
 
- 
-public class AutoLimelight extends CommandBase{
+public class LimelightDrive extends CommandBase {
     private ClawSystem clawSystem;
     private final PIDController turnPid;
     private final PIDController distancePid;
@@ -24,9 +23,8 @@ public class AutoLimelight extends CommandBase{
     private XboxController secondaryController;
     private Drivetrain drivetrain;
 
-
-
-    public AutoLimelight(ClawSystem clawSystem, XboxController secondaryController, Limelight limelight, boolean turnOff, Drivetrain drivetrain){
+    public LimelightDrive(ClawSystem clawSystem, XboxController secondaryController, Limelight limelight,
+            boolean turnOff, Drivetrain drivetrain) {
         addRequirements(clawSystem);
         this.clawSystem = clawSystem;
         this.limelight = limelight;
@@ -41,13 +39,12 @@ public class AutoLimelight extends CommandBase{
         this.drivetrain = drivetrain;
     }
 
-
     @Override
-    public void initialize(){
+    public void initialize() {
     }
 
     @Override
-    public void execute(){
+    public void execute() {
 
         if (limelight.isTargetDetected()) {
             double rotOut = turnPid.calculate(limelight.getXOffset());
@@ -59,13 +56,10 @@ public class AutoLimelight extends CommandBase{
             System.out.println(distancePidOut);
             drivetrain.driveMecanum(-(distancePidOut), -rotOut, 0);
 
-
         } else {
             drivetrain.driveMecanum(0, 0, 0);
         }
 
     }
-    
 
 }
-

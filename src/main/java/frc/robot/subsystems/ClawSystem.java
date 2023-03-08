@@ -49,7 +49,7 @@ public class ClawSystem extends SubsystemBase {
 		System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
 				arm2.getDistance());
 		// This method will be called once per scheduler run
-
+		// clamps for PIDs so they dont kill you as much
 		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
 		extender.set(
 				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
@@ -72,17 +72,19 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public double getExtendSetPoint() {
-
 		return extendPID.getSetpoint();
 	}
 
 	public double getArmSetPoint() {
-
 		return armPID.getSetpoint();
 	}
 
+	public void setTurnSetPoint(double setpoint) {
+		turnPID.setSetpoint(setpoint); // add clamps later maybe
+	}
+
 	public void setGrabPoint() {
-		armPID.setSetpoint(-1014.45);
+		armPID.setSetpoint(-1014.45); // align to y of h player station
 	}
 
 	public void setExtendSetPoint(double setpoint) {
