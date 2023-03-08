@@ -6,6 +6,7 @@ package frc.robot.commands.auto;
 
 import java.lang.reflect.InaccessibleObjectException;
 
+import edu.wpi.first.math.filter.LinearFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -13,6 +14,7 @@ public class BalanceAutoPartTwo extends CommandBase {
     // are we at the angle that we should go to the next command?
     private Drivetrain drivetrain;
     private double speed;
+    LinearFilter filter = LinearFilter.movingAverage(5);
 
     /** Creates a new BalanceAuto. */
     public BalanceAutoPartTwo(Drivetrain drivetrain, double speed) {
@@ -31,8 +33,11 @@ public class BalanceAutoPartTwo extends CommandBase {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
+        double roll = filter.calculate(drivetrain.getRoll());
+        System.out.println(roll);
         // System.out.println(navx.getYaw());
-        if (drivetrain.getRoll() <= 0.5) {
+        // get a new number that is correct
+        if (roll <= 0.5) {
         } else {
             drivetrain.driveMecanum(speed, 0, 0);
         }
@@ -46,7 +51,8 @@ public class BalanceAutoPartTwo extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        if (drivetrain.getRoll() <= 0.5) {
+        double roll = filter.calculate(drivetrain.getRoll());
+        if (roll <= 0.5) {
             return true;
         } else {
             return false;
