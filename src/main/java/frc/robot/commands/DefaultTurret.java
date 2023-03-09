@@ -7,9 +7,12 @@ package frc.robot.commands;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Robot;
 import frc.robot.subsystems.ClawSystem;
+import frc.robot.commands.limelight.LimelightHorizAim;
 
 public class DefaultTurret extends CommandBase {
     // Constant variables for speed
@@ -20,18 +23,15 @@ public class DefaultTurret extends CommandBase {
     private XboxController primaryController;
     private XboxController secondaryController;
     private ClawSystem clawSystem;
-    private Robot robot;
     private boolean claw;
 
     /** Creates a new DefaultTurret. */
-    public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController,
-            Robot robot) {
+    public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(clawSystem);
         this.primaryController = primaryController;
         this.secondaryController = secondaryController;
         this.clawSystem = clawSystem;
-        this.robot = robot;
 
     }
 
@@ -72,10 +72,8 @@ public class DefaultTurret extends CommandBase {
             // evil TT code - BE CAREFUL
             clawSystem.spinTablePID(secondaryController.getLeftX());
 
-            // TT limelight code
-            if (secondaryController.getYButton()) {
-                // to tired to figure this part out tonight- ill be there tomorrow
-            }
+            // turntable limelight magic (ew)
+            // aims while holding Y
 
             // extending arm on second controller
             // if (secondaryController.getRightBumper()) {
@@ -136,18 +134,8 @@ public class DefaultTurret extends CommandBase {
         // evil TT code
         clawSystem.spinTablePID(secondaryController.getLeftX() * 250);
 
-        // code for turning the roller on and off :3
-        if (secondaryController.getXButtonPressed()) {
-            clawSystem.rollerIn();
-        }
-        if (secondaryController.getXButtonReleased()) {
-            clawSystem.rollerStop();
-        }
-        if (secondaryController.getYButtonPressed()) {
-            clawSystem.rollerOut();
-        }
-        if (secondaryController.getYButtonReleased()) {
-            clawSystem.rollerStop();
+        if (secondaryController.getYButton()) {
+
         }
 
         // extending arm on second controller

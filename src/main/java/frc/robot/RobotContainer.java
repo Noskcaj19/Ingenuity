@@ -10,12 +10,16 @@ import frc.robot.commands.DefaultTurret;
 import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.DefaultAuto;
 import frc.robot.commands.auto.FinalAuto;
+import frc.robot.commands.limelight.LimelightHorizAim;
 import frc.robot.subsystems.ClawSystem;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
@@ -43,10 +47,11 @@ public class RobotContainer {
     private final ClawSystem clawSystem = new ClawSystem(pCM);
     private final Drivetrain drivetrain = new Drivetrain();
 
+    private final Limelight limelight = new Limelight();
+
     // commands
     private final DefaultDrive defaultDrive = new DefaultDrive(drivetrain, primaryController);
-    private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController,
-            robot);
+    private final DefaultTurret defaultTurret = new DefaultTurret(clawSystem, primaryController, secondaryController);
     private final DefaultAuto DefaultAuto = new DefaultAuto(drivetrain, clawSystem);
     private final Drive drive = new Drive(drivetrain, 1.3, 0.1);
     // private final FinalAuto finalAuto = new FinalAuto(drive, drivetrain);
@@ -84,6 +89,9 @@ public class RobotContainer {
         // pressed,
         // cancelling on release.
         // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        new JoystickButton(secondaryController, Button.kY.value)
+                .whileTrue(new LimelightHorizAim(clawSystem, limelight, secondaryController, drivetrain));
+
     }
 
     /**
