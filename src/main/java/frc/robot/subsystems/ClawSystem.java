@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
@@ -30,7 +31,9 @@ public class ClawSystem extends SubsystemBase {
 	// good values for position controll p 0.4 i 0 d 0.002
 	private final PIDController armPID = new PIDController(0.05, 0, 0.001);
 	private final PIDController extendPID = new PIDController(0.2, 0, 0.001);
-	private final PIDController turnPID = new PIDController(0, 0, 0);
+	private final PIDController turnPID = new PIDController(0.006, 0, 0);
+
+	private final SlewRateLimiter turnLimiter = new SlewRateLimiter(2);
 
 	/** Creates a new ClawSystem. */
 	public ClawSystem(PneumaticsControlModule pCM) {
@@ -46,9 +49,11 @@ public class ClawSystem extends SubsystemBase {
 
 	@Override
 	public void periodic() {
-		System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
-				arm2.getDistance());
+		// System.out.println("Arm Target " + armPID.getSetpoint() + " actual " +
+		// arm2.getDistance());
 		// This method will be called once per scheduler run
+
+		// System.out.println("TURRET VAL" + turnCoder.getDistance());
 
 		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
 		extender.set(
@@ -68,7 +73,12 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void spinTablePID(double setpoint) {
-		turnTable.set(turnPID.calculate(turnCoder.getDistance(), setpoint));
+
+		var pidOut = turnPID.calculate(-turnCoder.getDistance(), setpoint);
+		var slewOut = turnLimiter.calculate(pidOut);
+		turnTable.set(slewOut);
+
+		System.out.println("Turn setpoint: " + setpoint + " encoder: " + turnCoder.getDistance());
 	}
 
 	public double getExtendSetPoint() {
