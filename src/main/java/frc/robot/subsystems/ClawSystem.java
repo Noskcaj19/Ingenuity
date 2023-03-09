@@ -82,17 +82,19 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public double getExtendSetPoint() {
-
 		return extendPID.getSetpoint();
 	}
 
 	public double getArmSetPoint() {
-
 		return armPID.getSetpoint();
 	}
 
+	public void setTurnSetPoint(double setpoint) {
+		turnPID.setSetpoint(setpoint); // add clamps later maybe
+	}
+
 	public void setGrabPoint() {
-		armPID.setSetpoint(-1014.45);
+		armPID.setSetpoint(-1014.45); // align to y of h player station
 	}
 
 	public void setExtendSetPoint(double setpoint) {
