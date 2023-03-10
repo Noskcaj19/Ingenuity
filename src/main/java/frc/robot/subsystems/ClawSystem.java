@@ -58,6 +58,9 @@ public class ClawSystem extends SubsystemBase {
 		arm.set(-MathUtil.clamp(armPID.calculate(/* arm */arm2.getDistance()), -1, 1));
 		extender.set(
 				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
+		var pidOut = turnPID.calculate(-turnCoder.getDistance());
+		var slewOut = turnLimiter.calculate(pidOut);
+		turnTable.set(slewOut);
 	}
 
 	public boolean extendAtSetpoint() {
@@ -73,12 +76,13 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void spinTablePID(double setpoint) {
+		turnPID.setSetpoint(MathUtil.clamp(setpoint, -250, 250));
+		System.out.println("Turn setpoint: " + setpoint + " encoder: " +
+				turnCoder.getDistance());
+	}
 
-		var pidOut = turnPID.calculate(-turnCoder.getDistance(), setpoint);
-		var slewOut = turnLimiter.calculate(pidOut);
-		turnTable.set(slewOut);
-
-		System.out.println("Turn setpoint: " + setpoint + " encoder: " + turnCoder.getDistance());
+	public double getSpinTableSetpoint() {
+		return turnPID.getSetpoint();
 	}
 
 	public double getExtendSetPoint() {
@@ -89,9 +93,10 @@ public class ClawSystem extends SubsystemBase {
 		return armPID.getSetpoint();
 	}
 
-	public void setTurnSetPoint(double setpoint) {
-		turnPID.setSetpoint(setpoint); // add clamps later maybe
-	}
+	// public void setTurnSetPoint(double setpoint) {
+	// System.out.println("Setting turn setpoint to: " + setpoint);
+	// turnPID.setSetpoint(setpoint); // add clamps later maybe
+	// }
 
 	public void setGrabPoint() {
 		armPID.setSetpoint(-1014.45); // align to y of h player station

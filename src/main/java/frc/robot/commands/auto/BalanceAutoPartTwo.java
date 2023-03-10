@@ -14,6 +14,7 @@ public class BalanceAutoPartTwo extends CommandBase {
     // are we at the angle that we should go to the next command?
     private Drivetrain drivetrain;
     private double speed;
+    private boolean done;
     LinearFilter filter = LinearFilter.movingAverage(5);
 
     /** Creates a new BalanceAuto. */
@@ -38,6 +39,7 @@ public class BalanceAutoPartTwo extends CommandBase {
         // System.out.println(navx.getYaw());
         // get a new number that is correct
         if (roll <= 0.5) {
+            done = true;
         } else {
             drivetrain.driveMecanum(speed, 0, 0);
         }
@@ -51,11 +53,6 @@ public class BalanceAutoPartTwo extends CommandBase {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        double roll = filter.calculate(drivetrain.getRoll());
-        if (roll <= 0.5) {
-            return true;
-        } else {
-            return false;
-        }
+        return done;
     }
 }
