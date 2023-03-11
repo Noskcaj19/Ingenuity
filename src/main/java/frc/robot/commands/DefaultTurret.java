@@ -23,7 +23,7 @@ public class DefaultTurret extends CommandBase {
     private XboxController primaryController;
     private XboxController secondaryController;
     private ClawSystem clawSystem;
-    private boolean claw;
+    private boolean claw = false;
 
     /** Creates a new DefaultTurret. */
     public DefaultTurret(ClawSystem clawSystem, XboxController primaryController, XboxController secondaryController) {
@@ -55,7 +55,6 @@ public class DefaultTurret extends CommandBase {
         // code for claw
         if (secondaryController.getAButtonPressed()) {
 
-            boolean clawBool;
             if (claw == true) {
                 clawSystem.openClaw();
                 claw = !claw;

@@ -36,7 +36,7 @@ public class BalanceAutoPartTwo extends CommandBase {
     @Override
     public void execute() {
         double roll = filter.calculate(drivetrain.getRoll());
-        System.out.println(roll);
+        // System.out.println(roll);
         // System.out.println(navx.getYaw());
         // get a new number that is correct
         if (roll <= 8.5) {

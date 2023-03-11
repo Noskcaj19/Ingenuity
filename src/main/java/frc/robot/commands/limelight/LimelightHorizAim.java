@@ -23,12 +23,18 @@ public class LimelightHorizAim extends CommandBase {
         this.limelight = limelight;
         this.secondaryController = secondaryController;
         this.drivetrain = drivetrain;
-        turnPid = new PIDController(0.01, 0, 0);
+        turnPid = new PIDController(0.07, 0, 0.07 * 0.02);
 
     }
 
     @Override
     public void initialize() {
+        // clawSystem.setTurretMode(ClawSystem.TurretMode.Power);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        // clawSystem.setTurretMode(ClawSystem.TurretMode.Pid);
     }
 
     @Override
@@ -36,15 +42,19 @@ public class LimelightHorizAim extends CommandBase {
         if (limelight.isTargetDetected()) {
             double rotOut = turnPid.calculate(limelight.getXOffset());
 
-            clawSystem.spinTablePID(rotOut);
+            rotOut = MathUtil.clamp(rotOut, -1, 1);
+            // clawSystem.spinTable(-rotOut);
+            clawSystem.spinTablePID(clawSystem.getSpinTableSetpoint() + -rotOut * 8);
 
-            // System.out.println(rotOut);
+            System.out.println(
+                    rotOut + " limelight x " + limelight.getXOffset() + " " + clawSystem.getSpinTableSetpoint());
+            // System.out.println("L");
             // alt idea:
             // sp = clawSystem.getTurnSetPoint();
             // clawSystem.setTurnSetPoint(ap+rotOut);
             // should set the turntable setpoint to the displacement of the target
         } else {
-            // System.out.println("No target");
+            System.out.println("No target");
         }
     }
 

@@ -18,6 +18,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClawSystem extends SubsystemBase {
+	public enum TurretMode {
+		Pid,
+		Power
+	}
+
 	private CANSparkMax turnTable = new CANSparkMax(8, MotorType.kBrushed);
 	private CANSparkMax arm = new CANSparkMax(9, MotorType.kBrushed);
 	private CANSparkMax extender = new CANSparkMax(11, MotorType.kBrushless);
@@ -31,9 +36,12 @@ public class ClawSystem extends SubsystemBase {
 	// good values for position controll p 0.4 i 0 d 0.002
 	private final PIDController armPID = new PIDController(0.05, 0, 0.001);
 	private final PIDController extendPID = new PIDController(0.2, 0, 0.001);
-	private final PIDController turnPID = new PIDController(0.006, 0, 0);
+	private final PIDController turnPID = new PIDController(0.010, 0, 0.012 * 0.2);
 
 	private final SlewRateLimiter turnLimiter = new SlewRateLimiter(2);
+
+	private TurretMode turretMode = TurretMode.Pid;
+	private double turretSpeed = 0;
 
 	/** Creates a new ClawSystem. */
 	public ClawSystem(PneumaticsControlModule pCM) {
@@ -60,7 +68,15 @@ public class ClawSystem extends SubsystemBase {
 				MathUtil.clamp(extendPID.calculate(extender.getEncoder().getPosition()), -0.7, 0.7));
 		var pidOut = turnPID.calculate(-turnCoder.getDistance());
 		var slewOut = turnLimiter.calculate(pidOut);
-		turnTable.set(slewOut);
+		if (turretMode == TurretMode.Pid) {
+			turnTable.set(slewOut);
+		} else {
+			turnTable.set(turretSpeed);
+		}
+	}
+
+	public void setTurretMode(TurretMode mode) {
+		turretMode = mode;
 	}
 
 	public boolean extendAtSetpoint() {
@@ -72,7 +88,7 @@ public class ClawSystem extends SubsystemBase {
 	}
 
 	public void spinTable(double speed) {
-		turnTable.set(speed);
+		turretSpeed = speed;
 	}
 
 	public void spinTablePID(double setpoint) {
