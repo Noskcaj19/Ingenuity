@@ -7,6 +7,7 @@ package frc.robot.commands.auto;
 import java.lang.reflect.InaccessibleObjectException;
 
 import edu.wpi.first.math.filter.LinearFilter;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
@@ -15,7 +16,7 @@ public class BalanceAutoPartTwo extends CommandBase {
     private Drivetrain drivetrain;
     private double speed;
     private boolean done;
-    LinearFilter filter = LinearFilter.movingAverage(5);
+    MedianFilter filter = new MedianFilter(10);
 
     /** Creates a new BalanceAuto. */
     public BalanceAutoPartTwo(Drivetrain drivetrain, double speed) {
@@ -38,7 +39,7 @@ public class BalanceAutoPartTwo extends CommandBase {
         System.out.println(roll);
         // System.out.println(navx.getYaw());
         // get a new number that is correct
-        if (roll <= 0.5) {
+        if (roll <= 8.5) {
             done = true;
         } else {
             drivetrain.driveMecanum(speed, 0, 0);

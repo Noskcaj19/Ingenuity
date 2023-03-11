@@ -42,7 +42,8 @@ public class DefaultDrive extends CommandBase {
         drivetrain.driveMecanum(
                 xSpeed,
                 primaryController.getLeftX() * 0,
-                rot);
+                rot,
+                true);
         if (primaryController.getStartButton()) {
             drivetrain.zero();
         }

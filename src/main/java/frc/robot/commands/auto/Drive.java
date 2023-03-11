@@ -9,6 +9,7 @@ public class Drive extends CommandBase {
     private Drivetrain drivetrain;
     private double distance;
     private double speed;
+    private boolean done = false;
 
     public Drive(Drivetrain drivetrain, double distance, double speed) {
         addRequirements(drivetrain);
@@ -31,10 +32,20 @@ public class Drive extends CommandBase {
     public void execute() {
         // if the robot has not reached the set distance, keep driving
         // otherwise, (if the distance has been reached), stop
-        if (drivetrain.getDistance() < distance) {
-            drivetrain.driveMecanum(speed, 0, 0);
+        if (distance < 0) {
+            if (drivetrain.getDistance() > distance) {
+                drivetrain.driveMecanum(speed, 0, 0);
+            } else {
+                drivetrain.driveMecanum(0, 0, 0);
+                done = true;
+            }
         } else {
-            drivetrain.driveMecanum(0, 0, 0);
+            if (drivetrain.getDistance() < distance) {
+                drivetrain.driveMecanum(speed, 0, 0);
+            } else {
+                drivetrain.driveMecanum(0, 0, 0);
+                done = true;
+            }
         }
     }
 
@@ -46,10 +57,6 @@ public class Drive extends CommandBase {
     public boolean isFinished() {
         // if the distance has been reached, the command is finished
         // otherwise, the command is not finished
-        if (drivetrain.getDistance() >= distance) {
-            return true;
-        } else {
-            return false;
-        }
+        return done;
     }
 }

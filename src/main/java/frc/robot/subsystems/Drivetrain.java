@@ -66,6 +66,7 @@ public class Drivetrain extends SubsystemBase {
             // navx.setAngleAdjustment(navx.getRotation2d().getDegrees());
             initAngle = navx.getRotation2d();
             Shuffleboard.getTab("Debug").addDouble("NAVX", () -> navx.getRotation2d().minus(initAngle).getDegrees());
+            Shuffleboard.getTab("Debug").addDouble("NAVX Roll", () -> navx.getRoll());
 
         } catch (Exception ex) {
         }
@@ -92,6 +93,14 @@ public class Drivetrain extends SubsystemBase {
     }
 
     public void driveMecanum(double x, double y, double rotation) {
+        driveMecanum(x, y, rotation, false);
+    }
+
+    public void driveMecanum(double x, double y, double rotation, boolean square) {
+        if (square) {
+            x = Math.copySign(Math.pow(x, 2), x);
+            rotation = Math.copySign(Math.pow(rotation, 2), rotation);
+        }
         drivetrain.driveCartesian(x, y, rotation);
     }
 

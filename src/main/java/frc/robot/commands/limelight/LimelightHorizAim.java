@@ -38,13 +38,13 @@ public class LimelightHorizAim extends CommandBase {
 
             clawSystem.spinTablePID(rotOut);
 
-            System.out.println(rotOut);
+            // System.out.println(rotOut);
             // alt idea:
             // sp = clawSystem.getTurnSetPoint();
             // clawSystem.setTurnSetPoint(ap+rotOut);
             // should set the turntable setpoint to the displacement of the target
         } else {
-            System.out.println("No target");
+            // System.out.println("No target");
         }
     }
 
