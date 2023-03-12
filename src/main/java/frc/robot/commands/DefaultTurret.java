@@ -69,7 +69,7 @@ public class DefaultTurret extends CommandBase {
         // setArmSetPoint(set);
 
         // evil TT code
-        clawSystem.spinTablePID((MathUtil.applyDeadband(secondaryController.getLeftX(), .05, .05) * 15)
+        clawSystem.spinTablePID((MathUtil.applyDeadband(secondaryController.getLeftX(), .05) * 15)
                 + clawSystem.getSpinTableSetpoint());
 
         // extending arm on second controller
