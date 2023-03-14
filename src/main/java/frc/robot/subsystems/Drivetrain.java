@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -44,6 +45,14 @@ public class Drivetrain extends SubsystemBase {
 
     private final Field2d m_feild = new Field2d();
 
+    SlewRateLimiter filter = new SlewRateLimiter(1);
+    SlewRateLimiter filterTurn = new SlewRateLimiter(1);
+
+    // pretend that there is a second controller
+
+    private final SlewRateLimiter speedLimiter = new SlewRateLimiter(5);
+    private final SlewRateLimiter rotLimiter = new SlewRateLimiter(3);
+
     // Odometry stuffs
     public static final double kGearRatio = 10.71;
     public static final double kWheelRadius = 0.076;
@@ -56,6 +65,8 @@ public class Drivetrain extends SubsystemBase {
     private AHRS navx;
     private Rotation2d initAngle;
     private final MecanumDriveOdometry odometry;
+    double xCalc;
+    double rotCalc;
 
     public Drivetrain() {
 
@@ -100,8 +111,15 @@ public class Drivetrain extends SubsystemBase {
         if (square) {
             x = Math.copySign(Math.pow(x, 2), x);
             rotation = Math.copySign(Math.pow(rotation, 2), rotation);
+            xCalc = speedLimiter.calculate(x);
+            rotCalc = rotLimiter.calculate(rotation);
+            drivetrain.driveCartesian(xCalc, y, rotCalc);
+        } else {
+            x = speedLimiter.calculate(x);
+            rotation = rotLimiter.calculate(rotation);
+            drivetrain.driveCartesian(x, y, rotation);
         }
-        drivetrain.driveCartesian(x, y, rotation);
+
     }
 
     public void zero() {

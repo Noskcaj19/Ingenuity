@@ -37,8 +37,8 @@ public class DefaultDrive extends CommandBase {
     @Override
     public void execute() {
 
-        final double xSpeed = speedLimiter.calculate(-primaryController.getLeftY());
-        final double rot = rotLimiter.calculate(primaryController.getRightX());
+        final double xSpeed = -primaryController.getLeftY();
+        final double rot = primaryController.getRightX();
         drivetrain.driveMecanum(
                 xSpeed,
                 primaryController.getLeftX() * 0,
