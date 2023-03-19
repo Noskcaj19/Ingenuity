@@ -40,10 +40,10 @@ public class ClawSystem extends SubsystemBase {
 
 	private final SlewRateLimiter turnLimiter = new SlewRateLimiter(2);
 
-	private TurretMode turretMode = TurretMode.Pid;
+	private TurretMode turretMode = TurretMode.Power;
 	private double turretSpeed = 0;
 
-	/** Creates a new ClawSystem. */
+	/** Creates a new ClawSystemp. */
 	public ClawSystem(PneumaticsControlModule pCM) {
 		this.pCM = pCM;
 		armSolenoid = pCM.makeDoubleSolenoid(4, 5);

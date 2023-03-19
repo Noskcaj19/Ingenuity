@@ -82,7 +82,7 @@ public class FinalAuto extends SequentialCommandGroup {
                 new WaitCommand(0.5),
                 new ExtendArm(clawSystem, 0),
                 new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                new BalanceAuto(drivetrain, -0.35).withTimeout(6));
+                new BalanceAuto(drivetrain, -0.35).withTimeout(3));
 
         /*
          * addCommands(
@@ -108,21 +108,21 @@ public class FinalAuto extends SequentialCommandGroup {
 
     public void ChargeStationMidGoal() {
         addCommands(
-                // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
-                // new MoveArm(clawSystem, -219),
-                // new ExtendArm(clawSystem, 5),
-                // new ExtendArm(clawSystem, 0),
-                // new MoveArm(clawSystem, -1095),
-                // new ExtendArm(clawSystem, 20),
-                // new WaitCommand(1),
-                // new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
-                // new WaitCommand(0.5),
-                // new ExtendArm(clawSystem, 0),
-                // new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
+                new MoveArm(clawSystem, -500),
+                new ExtendArm(clawSystem, 5),
+                new ExtendArm(clawSystem, 0),
+                new MoveArm(clawSystem, -1095),
+                new ExtendArm(clawSystem, 20),
+                new WaitCommand(1),
+                new ChangeClawStatus(clawSystem, ClawStatus.OPEN),
+                new WaitCommand(0.5),
+                new ExtendArm(clawSystem, 0),
+                new ChangeClawStatus(clawSystem, ClawStatus.CLOSE),
                 new BalanceAuto(drivetrain, -0.4).withTimeout(6),
                 new Drive(drivetrain, -.5, -.2).withTimeout(5),
                 new BalanceAutoPartTwo(drivetrain, -0.15).withTimeout(5),
-                new Drive(drivetrain, .08, .25).withTimeout(5));
+                new Drive(drivetrain, .08, .2).withTimeout(5));
     }
 
 }

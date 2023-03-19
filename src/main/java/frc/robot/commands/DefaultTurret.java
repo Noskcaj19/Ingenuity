@@ -64,13 +64,14 @@ public class DefaultTurret extends CommandBase {
             }
         }
         // old code for the turntable
-        // clawSystem.spinTable(secondaryController.getLeftX() / 2);
-        // setArmSetPoint(secondaryController.getLeftX()*1/50);
+        clawSystem.spinTable(secondaryController.getLeftX() / 2);
+        // setArmSetPoint(secondaryController.getLeftX() * 1 / 50);
         // setArmSetPoint(set);
 
         // evil TT code
-        clawSystem.spinTablePID((MathUtil.applyDeadband(secondaryController.getLeftX(), .05) * 15)
-                + clawSystem.getSpinTableSetpoint());
+        // clawSystem.spinTablePID((MathUtil.applyDeadband(secondaryController.getLeftX(),
+        // .05) * 15)
+        // + clawSystem.getSpinTableSetpoint());
 
         // extending arm on second controller
         // if (secondaryController.getRightBumper()) {
