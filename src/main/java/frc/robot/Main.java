@@ -24,6 +24,28 @@ public final class Main {
      * If you change your main robot class, change the parameter type.
      */
     public static void main(String... args) {
+
+        // Test LUT OOB interpolation
+		// var armDLUT = new InterpLUT();
+		// armDLUT.add(0, 0.0);
+		// armDLUT.add(1, 1.0);
+		// armDLUT.add(2, 2.0);
+		// armDLUT.createLUT();
+        // System.out.println(armDLUT);
+        // System.out.println("-1  " + armDLUT.get(-1.0));
+        // System.out.println("0.0 " + armDLUT.get(0.0));
+        // System.out.println("0.5 " + armDLUT.get(0.5));
+        // System.out.println("1.0 " + armDLUT.get(1));
+        // System.out.println("2.0 " + armDLUT.get(2));
+        // System.out.println("3.0 " + armDLUT.get(3));
+        // System.out.println("4.0 " + armDLUT.get(4));
+
+        // var armDLUT = new InterpLUT();
+		// armDLUT.add(0, 500);
+		// armDLUT.add(48, 100);
+		// armDLUT.createLUT();
+        // System.out.println("0.0 " + armDLUT.get(0));
+        // System.out.println("48.0 " + armDLUT.get(49.1));
         RobotBase.startRobot(Robot::new);
     }
 }

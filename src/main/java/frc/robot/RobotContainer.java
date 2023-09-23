@@ -7,6 +7,8 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.DefaultDrive;
 import frc.robot.commands.DefaultTurret;
+import frc.robot.commands.HomeElevator;
+import frc.robot.commands.HomeExtender;
 import frc.robot.commands.auto.Drive;
 import frc.robot.commands.auto.DefaultAuto;
 import frc.robot.commands.auto.FinalAuto;
@@ -17,6 +19,7 @@ import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj.PneumaticsControlModule;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -37,7 +40,7 @@ public class RobotContainer {
     // other
     private final Robot robot = new Robot();
 
-    private final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
+    public final PneumaticsControlModule pCM = new PneumaticsControlModule(22);
 
     // Controllers
     private final XboxController primaryController = new XboxController(0);
@@ -89,9 +92,12 @@ public class RobotContainer {
         // pressed,
         // cancelling on release.
         // m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-        // new JoystickButton(secondaryController, Button.kY.value)
+        // new JoystickButton(secondaryController, Button.kB.value)
         // .whileTrue(new LimelightHorizAim(clawSystem, limelight, secondaryController,
         // drivetrain));
+
+        Shuffleboard.getTab("Debug").add(new HomeExtender(clawSystem));
+        // Shuffleboard.getTab("Debug").add(new HomeElevator(clawSystem));
 
     }
 

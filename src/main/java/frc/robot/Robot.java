@@ -15,6 +15,7 @@ import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -45,6 +46,7 @@ public class Robot extends TimedRobot {
     private final SendableChooser<String> m_chooser = new SendableChooser<>();
     Command autonomousCommand;
 
+
     /**
      * This function is run when the robot is first started up and should be used
      * for any
@@ -72,6 +74,8 @@ public class Robot extends TimedRobot {
         m_chooser.addOption("ChargeStation_MidGoal", kCustomAuto2);
         SmartDashboard.putData("Auto choices", m_chooser);
 
+
+        m_robotContainer.pCM.disableCompressor();
         // m_field.getObject("traj").setTrajectory(m_trajectory);
 
     }
@@ -88,6 +92,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void robotPeriodic() {
+
         // Runs the Scheduler. This is responsible for polling buttons, adding
         // newly-scheduled
         // commands, running already-scheduled commands, removing finished or

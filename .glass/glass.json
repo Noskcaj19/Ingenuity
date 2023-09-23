@@ -1,0 +1,252 @@
+{
+  "NetworkTables": {
+    "Retained Values": {
+      "open": false
+    },
+    "persistent": {
+      "Shuffleboard": {
+        "Debug": {
+          "Arm Elevation Control": {
+            "open": true
+          },
+          "Turn Control": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "transitory": {
+      "Debug": {
+        "open": true
+      },
+      "Shuffleboard": {
+        ".metadata": {
+          "open": true
+        },
+        "Debug": {
+          "Arm Elevation Control": {
+            "open": true
+          },
+          "PIDController[1]": {
+            "open": true
+          },
+          "Turn Control": {
+            "open": true
+          },
+          "open": true
+        },
+        "Limelight data": {
+          "open": true
+        },
+        "open": true
+      },
+      "SmartDashboard": {
+        "Field": {
+          "open": true
+        },
+        "open": true
+      },
+      "limelight": {
+        "open": true
+      }
+    },
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Debug/PIDController[1]": "PIDController",
+      "/Shuffleboard/Debug/PIDController[2]": "PIDController",
+      "/SmartDashboard/Auto choices": "String Chooser",
+      "/SmartDashboard/Field": "Field2d"
+    }
+  },
+  "NetworkTables Info": {
+    "Connections": {
+      "open": false
+    }
+  },
+  "NetworkTables Settings": {
+    "listenAddress": "0.0.0.0",
+    "mode": "Client (NT4)",
+    "serverTeam": "1523"
+  },
+  "Plots": {
+    "Plot <0>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 461,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn Effect",
+              "name": "Turret Motor Out",
+              "yAxis": 1
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn Goal",
+              "name": "Turret Goal"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn In",
+              "name": "Turn Encoder"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn Setpoint",
+              "name": "Turn Setpoint"
+            },
+            {
+              "color": [
+                0.5058823823928833,
+                0.44705885648727417,
+                0.7019608020782471,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn Accel",
+              "name": "Turn Accel"
+            },
+            {
+              "color": [
+                0.5764706134796143,
+                0.4705882668495178,
+                0.3764706254005432,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Turn Control/Turn FF",
+              "name": "Turn FF",
+              "yAxis": 1
+            }
+          ],
+          "yaxis2": true
+        }
+      ],
+      "window": {
+        "name": "Turret"
+      }
+    },
+    "Plot <1>": {
+      "plots": [
+        {
+          "axis": [
+            {
+              "autoFit": true
+            }
+          ],
+          "height": 170,
+          "series": [
+            {
+              "color": [
+                0.2980392277240753,
+                0.44705885648727417,
+                0.6901960968971252,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation Effect",
+              "name": "Arm Motor Out",
+              "yAxis": 1
+            },
+            {
+              "color": [
+                0.8666667342185974,
+                0.5176470875740051,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation Goal",
+              "name": "Arm Goal"
+            },
+            {
+              "color": [
+                0.3333333432674408,
+                0.658823549747467,
+                0.4078431725502014,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation In",
+              "name": "Arm Encoder"
+            },
+            {
+              "color": [
+                0.7686275243759155,
+                0.30588236451148987,
+                0.32156863808631897,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation Setpoint",
+              "name": "Arm Setpoint"
+            },
+            {
+              "color": [
+                0.5058823823928833,
+                0.44705885648727417,
+                0.7019608020782471,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation Accel",
+              "name": "Arm Accel"
+            },
+            {
+              "color": [
+                0.5764706134796143,
+                0.4705882668495178,
+                0.3764706254005432,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/Arm Elevation FF",
+              "name": "Arm FF"
+            },
+            {
+              "color": [
+                0.8549020290374756,
+                0.545098066329956,
+                0.7647059559822083,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/P LUT value"
+            },
+            {
+              "color": [
+                0.5490196347236633,
+                0.5490196347236633,
+                0.5490196347236633,
+                1.0
+              ],
+              "id": "NT:/Shuffleboard/Debug/Arm Elevation Control/D LUT value"
+            }
+          ],
+          "yaxis2": true
+        }
+      ],
+      "window": {
+        "name": "Arm Control"
+      }
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "name": "/Shuffleboard/Debug/Arm Elevation Control/Max Vel",
+    "type": "double",
+    "value": 1100.0,
+    "properties": {
+      "persistent": true
+    }
+  },
+  {
+    "name": "/Shuffleboard/Debug/Arm Elevation Control/Max Accel",
+    "type": "double",
+    "value": 2000.0,
+    "properties": {
+      "persistent": true
+    }
+  }
+]

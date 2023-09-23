@@ -64,63 +64,29 @@ public class DefaultTurret extends CommandBase {
             }
         }
         // old code for the turntable
-        clawSystem.spinTable(secondaryController.getLeftX() / 2);
-        // setArmSetPoint(secondaryController.getLeftX() * 1 / 50);
-        // setArmSetPoint(set);
-
-        // evil TT code
-        // clawSystem.spinTablePID((MathUtil.applyDeadband(secondaryController.getLeftX(),
-        // .05) * 15)
-        // + clawSystem.getSpinTableSetpoint());
-
-        // extending arm on second controller
-        // if (secondaryController.getRightBumper()) {
-        // extendSet = MathUtil.clamp(extendSet + 0.5, 0, 45);
-        // clawSystem.setExtendSetPoint(extendSet);
-        // } else if (secondaryController.getLeftBumper()){
-        // extendSet = MathUtil.clamp(extendSet - 0.5, 0, 45);
-        // clawSystem.setExtendSetPoint(extendSet);
-        // }
-        // System.out.println(extendSet);
-        // clawSystem.setExtendSetPoint(extendSet);
-
-        // else {
-        // clawSystem.setExtendSetPoint(extendSet);
-        // }
-
-        // //sets setpoint for PID
-        // if(secondaryController.getXButton()){
-        // set = set + 0.1;
-        // }
-        // if(secondaryController.getYButton()){
-        // set = set - 0.1;
-        // }
-        // secondarycontroller > 0.1 thing
-
-        // our own very special deadband method!!!
-        double extendController;
-        if (secondaryController.getRightY() < 0.03 && secondaryController.getRightY() > -0.03) {
-            extendController = 0;
-        } else {
-            extendController = secondaryController.getRightY() * 2;
-        }
-
-        double moveController;
-        if (secondaryController.getLeftY() < 0.03 && secondaryController.getLeftY() > -0.03) {
-            moveController = 0;
-        } else {
-            moveController = secondaryController.getLeftY() * 10;
-        }
+        clawSystem.spinTablePID(
+                clawSystem.getSpinTableSetpoint() + MathUtil.applyDeadband(secondaryController.getLeftX(), .1) * 8.5);
 
         if (secondaryController.getXButton()) {
             clawSystem.setGrabPoint();
         }
 
+        double extendController = MathUtil.applyDeadband(secondaryController.getRightY() * 1.5, .03 * 2);
         var extendSet = -extendController + -clawSystem.getExtendSetPoint();
         clawSystem.setExtendSetPoint(extendSet);
 
-        var armSetpoint = moveController + clawSystem.getArmSetPoint();
+        double moveController = MathUtil.applyDeadband(secondaryController.getLeftY(), .05) * 10;
+        var scale = map(clawSystem.getExtendSetPoint(), -48, 0, .3, 1);
+        var armSetpoint = (moveController * scale) + clawSystem.getArmSetPoint();
         clawSystem.setArmSetPoint(armSetpoint);
+
+        if (secondaryController.getYButton()) {
+            clawSystem.spinTablePID(0);
+        }
+    }
+
+    static double map(double x, double in_min, double in_max, double out_min, double out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
     // Called once the command ends or is interrupted.

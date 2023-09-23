@@ -1,12 +1,27 @@
 {
   "HALProvider": {
     "Other Devices": {
-      "Talon FX[2]": {
+      "SPARK MAX [11]": {
         "header": {
           "open": true
         }
       },
-      "Talon FX[3]": {
+      "SPARK MAX [30]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [8]": {
+        "header": {
+          "open": true
+        }
+      },
+      "SPARK MAX [9]": {
+        "header": {
+          "open": true
+        }
+      },
+      "Talon FX[2]": {
         "header": {
           "open": true
         }
@@ -42,6 +57,47 @@
           "visible": true
         }
       }
+    }
+  },
+  "NetworkTables": {
+    "persistent": {
+      "Shuffleboard": {
+        "Debug": {
+          "open": true
+        },
+        "open": true
+      }
+    },
+    "transitory": {
+      "Debug": {
+        "open": true
+      },
+      "limelight": {
+        "open": true
+      }
+    }
+  },
+  "NetworkTables Info": {
+    "Clients": {
+      "open": true
+    },
+    "Connections": {
+      "open": true
+    },
+    "NT3@127.0.0.1:43676": {
+      "Publishers": {
+        "open": true
+      },
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
+    },
+    "Server": {
+      "Subscribers": {
+        "open": true
+      },
+      "open": true
     }
   }
 }
